@@ -63,7 +63,12 @@ struct Hex
         return new Hex(-r, -s, -q);
     }
 
-    static public List<Hex> directions = new List<Hex>{new Hex(1, 0, -1), new Hex(1, -1, 0), new Hex(0, -1, 1), new Hex(-1, 0, 1), new Hex(-1, 1, 0), new Hex(0, 1, -1)};
+    static public List<Hex> directions = new List<Hex>{new Hex(1, 0, -1),
+        new Hex(1, -1, 0),
+        new Hex(0, -1, 1),
+        new Hex(-1, 0, 1),
+        new Hex(-1, 1, 0),
+        new Hex(0, 1, -1)};
 
     static public Hex Direction(int direction)
     {
@@ -208,14 +213,14 @@ struct OffsetCoord
     {
         int col = h.q + (int)((h.r + offset * (h.r & 1)) / 2);
         int row = h.r;
-        return new Vector3Int(row, col, 0);
+        return new Vector3Int(col, row, 0);
     }
 
 
     static public Hex RFromUnity(Vector3Int h, int offset = -1)
     {
-        int q = h.y - (int)((h.x + offset * (h.x & 1)) / 2);
-        int r = h.x;
+        int q = h.x - (int)((h.y + offset * (h.y & 1)) / 2);
+        int r = h.y;
         int s = -q - r;
         return new Hex(q, r, s);
     }

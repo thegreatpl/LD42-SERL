@@ -46,11 +46,12 @@ public class GalaxyGenerator : MonoBehaviour {
                 var offset = OffsetCoord.RToUnityCoords(hex); 
 
                 var tilePos = new Vector3Int(start.x + offset.x, start.y + offset.y, 0);
-                //var obj = Instantiate(debugObj);
-                //obj.transform.position = StarSystem.TileToWorld(tilePos); 
-                //obj.GetComponent<Text>().text = tilePos.x + ", " + tilePos.y;
-                //obj.transform.SetParent(WorldCanvas.transform, true);
-                //obj.transform.localScale = new Vector3(1, 1, 1); 
+                var obj = Instantiate(debugObj);
+                obj.transform.position = StarSystem.TileToWorld(tilePos);
+
+                obj.GetComponent<Text>().text = hex.q + ", " + hex.r;
+                obj.transform.SetParent(WorldCanvas.transform, true);
+                obj.transform.localScale = new Vector3(1, 1, 1);
 
 
                 Tilemap.SetTile(tilePos, EmptySpace);

@@ -20,9 +20,13 @@ public static partial class DirectionExtensions
 {
     public static Vector3Int GetVectorInDirection(this Vector3Int pos, PointyDirection pointyDirection)
     {
-        var hex = OffsetCoord.RFromUnity(pos, 1);
-        var neighbour = Hex.Direction((int)pointyDirection);
-        return OffsetCoord.RToUnityCoords(hex.Add(neighbour), 1); 
+        var hex = OffsetCoord.RFromUnity(pos);
+        var hex2 = OffsetCoord.RoffsetToCube(new OffsetCoord(pos.y, pos.x)); 
+        var neighbour = hex.Neighbor((int)pointyDirection);
+
+        var result2 = OffsetCoord.RoffsetFromCube(neighbour);
+        var result1 = OffsetCoord.RToUnityCoords(neighbour);
+        return result1; 
     }
 }
 

@@ -34,13 +34,23 @@ public class StarSystem : MonoBehaviour {
 
         var worldPos = Camera.ScreenToWorldPoint(mousePos);
         var tile = ToTilePosition(worldPos);
-        Position.text = tile.x + ", " + tile.y + ", " + tile.z; 
+        Position.text = tile.x + ", " + tile.y + ", " + tile.z;
 
-        for(int idx = 0; idx < 6; idx++)
+        if (!Input.GetKey(KeyCode.LeftShift))
         {
-            var tilePos =  tile.GetVectorInDirection((PointyDirection)(idx));
-            debug[idx].transform.position = TileToWorld(tilePos);
-            debug[idx].name = tilePos.ToString(); 
+            for (int idx = 0; idx < 6; idx++)
+            {
+                //var direct = Hex.Direction(idx);
+                //var vect2 = OffsetCoord.RToUnityCoords(direct);
+                //debug[idx].transform.position = TileToWorld(vect2);
+                //debug[idx].name = direct.q + ", " + direct.r + ", " + direct.s;
+
+
+
+                var tilePos = tile.GetVectorInDirection((PointyDirection)(idx));
+                debug[idx].transform.position = TileToWorld(tilePos);
+                debug[idx].name = tilePos.ToString() + ":" + ((PointyDirection)idx).ToString();
+            }
         }
 	}
 
