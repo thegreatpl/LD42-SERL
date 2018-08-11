@@ -12,19 +12,13 @@ public class StarSystem : MonoBehaviour {
 
     public Camera Camera;
 
-    public GameObject debugObj;
 
-    GameObject[] debug;
 
 	// Use this for initialization
 	void Start () {
         Tilemap = GetComponent<Tilemap>();
 
-        debug = new GameObject[6]; 
-        for(int idx = 0; idx < 6; idx++)
-        {
-            debug[idx] = Instantiate(debugObj); 
-        }
+
 
 	}
 	
@@ -33,28 +27,12 @@ public class StarSystem : MonoBehaviour {
         var mousePos = Input.mousePosition;
 
         var worldPos = Camera.ScreenToWorldPoint(mousePos);
-        var tile = ToTilePosition(worldPos);
+        var tile = WorldToTile(worldPos);
         Position.text = tile.x + ", " + tile.y + ", " + tile.z;
 
-        if (!Input.GetKey(KeyCode.LeftShift))
-        {
-            for (int idx = 0; idx < 6; idx++)
-            {
-                //var direct = Hex.Direction(idx);
-                //var vect2 = OffsetCoord.RToUnityCoords(direct);
-                //debug[idx].transform.position = TileToWorld(vect2);
-                //debug[idx].name = direct.q + ", " + direct.r + ", " + direct.s;
-
-
-
-                var tilePos = tile.GetVectorInDirection((PointyDirection)(idx));
-                debug[idx].transform.position = TileToWorld(tilePos);
-                debug[idx].name = tilePos.ToString() + ":" + ((PointyDirection)idx).ToString();
-            }
-        }
 	}
 
-    public Vector3Int ToTilePosition(Vector3 pos)
+    public Vector3Int WorldToTile(Vector3 pos)
     {
         return Tilemap.WorldToCell(pos); 
     }

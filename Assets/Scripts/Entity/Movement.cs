@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        Move(Location); 
 	}
 	
 	// Update is called once per frame
@@ -21,9 +21,13 @@ public class Movement : MonoBehaviour {
 
     public void Move(PointyDirection direction)
     {
-
+        Move(Location.GetVectorInDirection(direction)); 
     }
 
+    /// <summary>
+    /// Moves to the specified position. 
+    /// </summary>
+    /// <param name="newLoc"></param>
     public void Move(Vector3Int newLoc)
     {
         if (!StarSystem.IsPassable(newLoc))

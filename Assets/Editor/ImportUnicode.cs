@@ -13,7 +13,7 @@ public class ImportUnicode : MonoBehaviour {
         var file = Directory.GetCurrentDirectory() + "/Assets/Resources/Tiles/TileAssignment.txt"; //Resources.Load<TextAsset>("Tiles/TileAssignment");
         var lines = LoadTextFileLines(file);
 
-        string unicodeDirectory = Directory.GetCurrentDirectory() + @"\..\..\Unicode images\";
+        string unicodeDirectory = Directory.GetCurrentDirectory() + @"\..\..\Unicode images\blackbackground";
         foreach (var line in lines)
         {
 

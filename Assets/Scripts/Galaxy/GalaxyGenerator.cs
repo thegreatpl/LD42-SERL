@@ -13,12 +13,12 @@ public class GalaxyGenerator : MonoBehaviour {
 
     public StarSystem StarSystem;
 
-    public Canvas WorldCanvas;
+    //public Canvas WorldCanvas;
 
-    public Camera Camera; 
+    //public Camera Camera;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Tilemap = GetComponent<Tilemap>();
         StarSystem = GetComponent<StarSystem>(); 
         GenerateGalaxy(25, new Vector3Int(0, 0, 0)); 
@@ -32,7 +32,7 @@ public class GalaxyGenerator : MonoBehaviour {
     public void GenerateGalaxy(int radius, Vector3Int start)
     {
 
-        var debugObj = WorldCanvas.GetComponentInChildren<Text>().gameObject; 
+        //var debugObj = WorldCanvas.GetComponentInChildren<Text>().gameObject; 
         //debugObj.AddComponent<Text>(); 
         //debugObj.GetComponent<Text>().fontSize = 1; 
         
@@ -46,12 +46,14 @@ public class GalaxyGenerator : MonoBehaviour {
                 var offset = OffsetCoord.RToUnityCoords(hex); 
 
                 var tilePos = new Vector3Int(start.x + offset.x, start.y + offset.y, 0);
-                var obj = Instantiate(debugObj);
-                obj.transform.position = StarSystem.TileToWorld(tilePos);
 
-                obj.GetComponent<Text>().text = hex.q + ", " + hex.r;
-                obj.transform.SetParent(WorldCanvas.transform, true);
-                obj.transform.localScale = new Vector3(1, 1, 1);
+
+                //var obj = Instantiate(debugObj);
+                //obj.transform.position = StarSystem.TileToWorld(tilePos);
+
+                //obj.GetComponent<Text>().text = hex.q + ", " + hex.r;
+                //obj.transform.SetParent(WorldCanvas.transform, true);
+                //obj.transform.localScale = new Vector3(1, 1, 1);
 
 
                 Tilemap.SetTile(tilePos, EmptySpace);
