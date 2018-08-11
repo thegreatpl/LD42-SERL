@@ -14,11 +14,14 @@ public class TickControlScript : MonoBehaviour, ITickable {
     /// <summary>
     /// List of all things that use a cooldown. 
     /// </summary>
-    public List<ICooldown> Cooldowns = new List<ICooldown>(); 
+    public List<ICooldown> Cooldowns = new List<ICooldown>();
+
+    public EntityBrain EntityBrain; 
 
 	// Use this for initialization
 	void Start () {
         CoolDown = 0;
+        EntityBrain = GetComponent<EntityBrain>(); 
         StarSystem.TimeController.TimeObjects.Add(this); 
 	}
 	
@@ -32,6 +35,7 @@ public class TickControlScript : MonoBehaviour, ITickable {
     /// </summary>
     public void RunTick()
     {
+        EntityBrain.RunTick(); 
     }
 
     /// <summary>

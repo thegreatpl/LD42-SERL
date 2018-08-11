@@ -142,7 +142,7 @@ public class GalaxyGenerator : MonoBehaviour {
     /// <param name="radius"></param>
     /// <param name="start"></param>
     /// <returns></returns>
-    public List<Vector3Int> GetHexagon(int radius, Vector3Int start)
+    public static List<Vector3Int> GetHexagon(int radius, Vector3Int start)
     {
         var result = new List<Vector3Int>(); 
         for (int q = -radius; q <= radius; q++)
