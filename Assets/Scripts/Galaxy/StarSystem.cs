@@ -135,7 +135,8 @@ public class StarSystem : MonoBehaviour {
         Cursor = PrefabManager.GetPrefab("Cursor");
         var cur = Instantiate(Cursor, new Vector3(0, 0), Cursor.transform.rotation); 
         var controller = cur.GetComponent<CursorController>();
-        controller.StarSystem = this; 
+        controller.StarSystem = this;
+        MenuManager.Cursor = controller; 
     }
 
    

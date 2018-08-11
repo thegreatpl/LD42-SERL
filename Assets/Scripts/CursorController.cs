@@ -185,4 +185,14 @@ public class CursorController : MonoBehaviour {
     {
         Camera.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.transform.position.z); 
     }
+
+    /// <summary>
+    /// Sets the cursor to the given position. 
+    /// </summary>
+    /// <param name="location"></param>
+    public void SetPosition(Vector3Int location)
+    {
+        Movement.Move(location);
+        SetCamPos(); 
+    }
 }

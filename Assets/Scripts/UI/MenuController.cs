@@ -29,7 +29,7 @@ public class MenuController : MonoBehaviour {
     /// <summary>
     /// Removes all the components from this menu. 
     /// </summary>
-    public void ClearMenu()
+    public virtual void ClearMenu()
     {
         buttons = new Dictionary<string, GameObject>(); 
         foreach(Transform child in transform)
@@ -44,7 +44,7 @@ public class MenuController : MonoBehaviour {
     /// <param name="text"></param>
     /// <param name="onClick"></param>
     /// <param name="key"></param>
-    public void AddButton(string name,  string text, OnClick onClick, KeyCode? key)
+    public virtual void AddButton(string name,  string text, OnClick onClick, KeyCode? key)
     {
         var button = Instantiate(ButtonObj, transform);
         button.name = name; 
@@ -58,7 +58,7 @@ public class MenuController : MonoBehaviour {
     /// Removes a specific button from the menu. 
     /// </summary>
     /// <param name="name"></param>
-    public void RemoveButton(string name)
+    public virtual void RemoveButton(string name)
     {
         if (buttons.ContainsKey(name))
         {

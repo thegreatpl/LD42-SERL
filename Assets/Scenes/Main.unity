@@ -669,6 +669,9 @@ MonoBehaviour:
   - Name: Menu
     GameObject: {fileID: 1541041698578040, guid: c8b8dd8ce435e5a49892672a9b476024,
       type: 2}
+  - Name: PageMenu
+    GameObject: {fileID: 1228536562106264, guid: f108637a92fec6f4889b1ac7e9532a5e,
+      type: 2}
 --- !u!114 &362664581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,6 +727,7 @@ MonoBehaviour:
   MainMenuScreen: {fileID: 120043146}
   TimeController: {fileID: 0}
   StarSystem: {fileID: 0}
+  Canvas: {fileID: 129941192}
 --- !u!1 &389344178
 GameObject:
   m_ObjectHideFlags: 0
