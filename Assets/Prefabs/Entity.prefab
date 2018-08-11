@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114529021633284462}
   - component: {fileID: 114716973628599466}
   - component: {fileID: 114483453421787138}
+  - component: {fileID: 114722511043963398}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StarSystem: {fileID: 0}
+  coolDown: 0
   EntityBrain: {fileID: 0}
 --- !u!114 &114483453421787138
 MonoBehaviour:
@@ -94,9 +96,11 @@ MonoBehaviour:
   Armor: 0
   Shields: 0
   VisionRange: 0
+  Type: 
   Weight: 0
   Movement: 0
   Engines: 0
+  CanColonize: 0
   Weapons: []
   TickControlScript: {fileID: 0}
 --- !u!114 &114716973628599466
@@ -112,6 +116,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StarSystem: {fileID: 0}
   Location: {x: 0, y: 0, z: 0}
+--- !u!114 &114722511043963398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1663384830018846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce10f0d09c38d494b8bf1213db0d9d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212606607577906778
 SpriteRenderer:
   m_ObjectHideFlags: 1

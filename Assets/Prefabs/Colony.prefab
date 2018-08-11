@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212505170448332032}
   - component: {fileID: 114155026991129354}
   - component: {fileID: 114716258036416900}
+  - component: {fileID: 114481779479861442}
   m_Layer: 0
   m_Name: Colony
   m_TagString: Untagged
@@ -61,6 +62,17 @@ MonoBehaviour:
   coolDown: 0
   mining: 1
   building: 0
+--- !u!114 &114481779479861442
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1779749452793454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce10f0d09c38d494b8bf1213db0d9d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114716258036416900
 MonoBehaviour:
   m_ObjectHideFlags: 1

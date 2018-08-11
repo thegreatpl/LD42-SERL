@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224748655389907840}
   - component: {fileID: 222093813198418982}
   - component: {fileID: 114743490450796922}
+  - component: {fileID: 114559849518777324}
   m_Layer: 5
   m_Name: PageMenu
   m_TagString: Untagged
@@ -51,6 +52,28 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1441591919534788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+--- !u!114 &114559849518777324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1228536562106264}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
@@ -106,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  ButtonObj: {fileID: 0}
+  ButtonObj: {fileID: 1192052881697734, guid: 42b44a4661af50b4bbf5206dd9d62994, type: 2}
   MenuManager: {fileID: 0}
   PerPage: 10
 --- !u!222 &222093813198418982

@@ -40,7 +40,7 @@ public class Flag : MonoBehaviour {
         EmpireSpriteRenders = go.AddComponent<SpriteRenderer>();
         if (EmpireTexture != null)
         {
-            EmpireSpriteRenders.sortingOrder = UsualSpriteRenderer.sortingOrder-1; 
+            EmpireSpriteRenders.sortingOrder = UsualSpriteRenderer.sortingOrder - 1; 
             EmpireSpriteRenders.sprite = EmpireTexture;
             EmpireSpriteRenders.enabled = true;
         }
