@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Empire;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,24 @@ public class EmpireScript : MonoBehaviour {
 
     public int Id;
 
+
+    public int Resouces = 0;
+
+    public StarSystem StarSystem; 
+
+
     /// <summary>
     /// Link to the entity manager. 
     /// </summary>
-    public EntityManager EntityManager; 
+    public EntityManager EntityManager;
+
+    /// <summary>
+    /// The entity gameobject. 
+    /// </summary>
+    public static GameObject Entity; 
+
+
+    public Dictionary<string, ShipDesign> Designs = new Dictionary<string, ShipDesign>(); 
 
 	// Use this for initialization
 	void Start () {

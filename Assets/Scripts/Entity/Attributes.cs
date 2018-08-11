@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Entity.Components;
+﻿using Assets.Scripts.Empire;
+using Assets.Scripts.Entity.Components;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -153,8 +154,13 @@ public class Attributes : MonoBehaviour {
     /// Initializes this entities stuff. 
     /// </summary>
     /// <param name="components"></param>
-    public void Initialize(int maxHp, List<BaseComponent> components)
+    public void Initialize(ShipDesign shipDesign)
     {
+        GetComponent<SpriteRenderer>().sprite = shipDesign.Sprite; 
+
+        var components = shipDesign.BaseComponents; 
+
+
         BaseComponents = components.Select(x => x.Clone()).ToList();
         Weight = 0; 
         BaseComponents.ForEach(x => Weight += x.Weight); 
@@ -162,7 +168,7 @@ public class Attributes : MonoBehaviour {
         Weapons = BaseComponents.OfType<WeaponComponent>().ToList();
         Weapons.ForEach(x => TickControlScript.Cooldowns.Add(x));
 
-        MaxHP = maxHp;
+        MaxHP = shipDesign.MaxHp;
         MaxShields = 0;
         MaxArmor = 0; 
         BaseComponents.OfType<ShieldComponent>().ToList().ForEach(x => MaxShields += x.ShieldValue);

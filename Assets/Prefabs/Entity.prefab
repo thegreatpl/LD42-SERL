@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114048587332651212}
   - component: {fileID: 114529021633284462}
   - component: {fileID: 114716973628599466}
+  - component: {fileID: 114483453421787138}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -55,6 +56,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StarSystem: {fileID: 0}
+  EntityBrain: {fileID: 0}
+--- !u!114 &114483453421787138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1663384830018846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01b95efcb267a74f97a75fa3f483aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StarSystem: {fileID: 0}
+  Attributes: {fileID: 0}
+  Movement: {fileID: 0}
+  EntityManager: {fileID: 0}
 --- !u!114 &114529021633284462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,6 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c83af92732d024d8b35947f24ce1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Battle: {fileID: 0}
+  Empire: {fileID: 0}
   StarSystem: {fileID: 0}
   Location: {x: 0, y: 0, z: 0}
   MaxHP: 0

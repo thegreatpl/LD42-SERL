@@ -27,7 +27,9 @@ public class StarSystem : MonoBehaviour {
 
     public TimeController TimeController;
 
-    public EntityManager EntityManager; 
+    public EntityManager EntityManager;
+
+    public EmpireManager EmpireManager; 
 
     public GameObject Cursor; 
 
@@ -38,7 +40,8 @@ public class StarSystem : MonoBehaviour {
         Spritemanager = GetComponent<Spritemanager>();
         PrefabManager = GetComponent<PrefabManager>();
         TimeController = GetComponent<TimeController>();
-        EntityManager = GetComponent<EntityManager>(); 
+        EntityManager = GetComponent<EntityManager>();
+        EmpireManager = GetComponent<EmpireManager>(); 
 
         LoadMainMenu(); 
 	}
@@ -100,6 +103,11 @@ public class StarSystem : MonoBehaviour {
         GalaxyGenerator.GenerateGalaxy();
         LoadMainGameScreen();
         InitCursor();
+        for(int idx = 0; idx < 5; idx++)
+        {
+            EmpireManager.CreateNewEmpire(); 
+        }
+        
 
         TimeController.Paused = false; 
     }

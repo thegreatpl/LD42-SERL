@@ -7,3 +7,4 @@ planet1:U+004F
 smallplanet:U+006F
 cursor:U+0058
 battle:U+2694
+corvette:U+0063

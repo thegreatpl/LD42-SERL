@@ -445,6 +445,7 @@ GameObject:
   - component: {fileID: 362664580}
   - component: {fileID: 362664581}
   - component: {fileID: 362664582}
+  - component: {fileID: 362664583}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -590,6 +591,7 @@ MonoBehaviour:
   PrefabManager: {fileID: 0}
   TimeController: {fileID: 0}
   EntityManager: {fileID: 0}
+  EmpireManager: {fileID: 0}
   Cursor: {fileID: 0}
 --- !u!114 &362664578
 MonoBehaviour:
@@ -679,6 +681,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entities: []
+--- !u!114 &362664583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 362664573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3aa2422a194e494aa4576b4fdec542c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StarSystem: {fileID: 0}
+  Spritemanager: {fileID: 0}
+  Empires: []
+  EntityManager: {fileID: 0}
 --- !u!1 &389344178
 GameObject:
   m_ObjectHideFlags: 0
