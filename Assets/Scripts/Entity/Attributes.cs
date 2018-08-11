@@ -12,13 +12,28 @@ public enum DamageType
 }
 
 public class Attributes : MonoBehaviour {
+
+    /// <summary>
+    /// The starsystem entity belong to. 
+    /// </summary>
+    public StarSystem StarSystem; 
+
+    /// <summary>
+    /// The tile this entity is on. 
+    /// </summary>
+    public Vector3Int Location; 
+
     /// <summary>
     /// The max hp of this entity. 
     /// </summary>
     public int MaxHP;
-
+    /// <summary>
+    /// Max armor of this entity. 
+    /// </summary>
     public int MaxArmor;
-
+    /// <summary>
+    /// max shields of this entity. 
+    /// </summary>
     public int MaxShields; 
 
     /// <summary>
@@ -36,15 +51,28 @@ public class Attributes : MonoBehaviour {
     /// </summary>
     public float Shields;
 
+
+
     /// <summary>
     /// How far this entity can see. 
     /// </summary>
     public int VisionRange;
 
+
+    /// <summary>
+    /// How heavy this is. 
+    /// </summary>
+    public float Weight; 
+
     /// <summary>
     /// How fast this can move. 
     /// </summary>
     public int Movement;
+
+    /// <summary>
+    /// How much engine power there is. 
+    /// </summary>
+    public int Engines; 
 
 
     /// <summary>
@@ -114,12 +142,33 @@ public class Attributes : MonoBehaviour {
         HP -= amount; 
     }
 
-    public void Initialize(List<BaseComponent> components)
+    /// <summary>
+    /// Initializes this entities stuff. 
+    /// </summary>
+    /// <param name="components"></param>
+    public void Initialize(int maxHp, List<BaseComponent> components)
     {
         BaseComponents = components.Select(x => x.Clone()).ToList();
+        Weight = 0; 
+        BaseComponents.ForEach(x => Weight += x.Weight); 
 
         Weapons = BaseComponents.OfType<WeaponComponent>().ToList();
-        Weapons.ForEach(x => TickControlScript.Cooldowns.Add(x)); 
+        Weapons.ForEach(x => TickControlScript.Cooldowns.Add(x));
+
+        MaxHP = maxHp;
+        MaxShields = 0;
+        MaxArmor = 0; 
+        BaseComponents.OfType<ShieldComponent>().ToList().ForEach(x => MaxShields += x.ShieldValue);
+        BaseComponents.OfType<ArmorComponent>().ToList().ForEach(x => MaxArmor += x.ArmorValue);
+        Engines = 0; 
+        BaseComponents.OfType<EngineComponent>().ToList().ForEach(x => Engines += x.Power);
+        VisionRange = BaseComponents.OfType<SensorComponent>().Count(); 
+
+        HP = MaxHP;
+        Armor = MaxArmor;
+        Shields = MaxShields; 
+
+        Movement = (int)( Weight / Engines); 
 
     }
 }
