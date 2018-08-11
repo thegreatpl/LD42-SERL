@@ -15,6 +15,8 @@ public class EntityBrain : MonoBehaviour {
 
     BaseState CurrentState; 
 
+    public string State { get { return CurrentState.Type; } }
+
 	// Use this for initialization
 	void Start () {
         Attributes = GetComponent<Attributes>();
@@ -37,8 +39,14 @@ public class EntityBrain : MonoBehaviour {
 
     public void SetState(BaseState newState)
     {
-        CurrentState.OnChange();
+        CurrentState?.OnChange();
         CurrentState = newState;
         CurrentState.OnSet(); 
+    }
+
+
+    public void MoveTo(Vector3Int location)
+    {
+        SetState(new MoveState(this, location)); 
     }
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class TickControlScript : MonoBehaviour, ITickable {
 
-    public StarSystem StarSystem; 
+    public StarSystem StarSystem;
 
     /// <summary>
     /// How long before this entity can take another action. 
     /// </summary>
-    public int CoolDown { get; set; }
+    public int CoolDown { get { return coolDown; } set { coolDown = value; } }
 
+    public int coolDown; 
     /// <summary>
     /// List of all things that use a cooldown. 
     /// </summary>
@@ -27,7 +28,8 @@ public class TickControlScript : MonoBehaviour, ITickable {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (CoolDown < 0)
+            CoolDown = 0; 
 	}
 
     /// <summary>

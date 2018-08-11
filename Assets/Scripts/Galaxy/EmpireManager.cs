@@ -41,7 +41,8 @@ public class EmpireManager : MonoBehaviour {
 
         script.EntityManager = EntityManager;
         script.Designs = BasicDesigns;
-        script.StarSystem = StarSystem; 
+        script.StarSystem = StarSystem;
+        script.StartAi(); 
     }
 
     public void LoadBasicDesigns()
@@ -65,7 +66,14 @@ public class EmpireManager : MonoBehaviour {
                 }, 
             }
         };
+        BasicDesigns.Add(corvette.Name, corvette); 
     }
 
+
+    public void NewGame()
+    {
+        Empires.ForEach(x => Destroy(x.gameObject));
+        Empires.Clear(); 
+    }
 
 }

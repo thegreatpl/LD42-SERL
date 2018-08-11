@@ -8,6 +8,8 @@ namespace Assets.Scripts.Entity.AI
 {
     public class GuardState : BaseState
     {
+        public override string Type { get { return "Guard";  } }
+
         public GuardState(EntityBrain brain) : base(brain) { }
 
         public override void OnChange()

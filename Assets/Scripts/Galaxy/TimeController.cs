@@ -67,7 +67,7 @@ public class TimeController : MonoBehaviour {
 
             TimeObjects.ForEach(x => x.EndTick());
             EntityManager.EndTick(); 
-            yield return null; 
+            yield return new WaitForSeconds(0.5f); 
         }
     }
 }

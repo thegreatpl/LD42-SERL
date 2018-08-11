@@ -22,7 +22,9 @@ public class GalaxyGenerator : MonoBehaviour {
 
     public int MinPlanets = 2; 
 
-    public int MaxPlanets = 12; 
+    public int MaxPlanets = 12;
+
+    public List<Vector3Int> Planets; 
 
     #region tileTypes
     public TileBase EmptySpace;
@@ -52,6 +54,7 @@ public class GalaxyGenerator : MonoBehaviour {
     /// </summary>
     public void GenerateGalaxy()
     {
+        Planets = new List<Vector3Int>(); 
         Tilemap.ClearAllTiles();
         LoadGraphics();
         GenerateMap(100); 
@@ -123,9 +126,11 @@ public class GalaxyGenerator : MonoBehaviour {
                     break;
                 //keep everything in the galaxy. 
                 if (ringAct.Count() != galaxy.Intersect(ringAct).Count())
-                    break; 
+                    break;
 
-                Tilemap.SetTile(ringAct.Random(), Planet); 
+                var p = ringAct.Random();
+                Tilemap.SetTile(p, Planet);
+                Planets.Add(p); 
                 claimed.AddRange(ringAct); 
             }
 

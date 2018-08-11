@@ -8,6 +8,7 @@ namespace Assets.Scripts.Entity.AI
 {
     public abstract class BaseState 
     {
+        public abstract string Type { get;  }
 
         public EntityBrain Brain;
 

@@ -99,7 +99,8 @@ public class StarSystem : MonoBehaviour {
     public void StartNewGame()
     {
         TimeController.Paused = true;
-        TimeController.StartNewGame(); 
+        TimeController.StartNewGame();
+        EmpireManager.NewGame(); 
         GalaxyGenerator.GenerateGalaxy();
         LoadMainGameScreen();
         InitCursor();

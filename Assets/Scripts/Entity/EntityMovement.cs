@@ -10,10 +10,11 @@ public class EntityMovement :Movement
     Attributes Attributes;
     TickControlScript TickControlScript; 
 
-    private void Start()
+     void Start()
     {
         Attributes = GetComponent<Attributes>();
         TickControlScript = GetComponent<TickControlScript>();
+        StarSystem = Attributes.StarSystem; 
         Location = Attributes.Location; 
         Move(Location);
     }

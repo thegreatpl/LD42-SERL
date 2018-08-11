@@ -9,6 +9,9 @@ namespace Assets.Scripts.Entity.AI
 {
     public class MoveState : BaseState
     {
+        public override string Type { get { return "Move"; } }
+
+
         public Vector3Int Target;
 
         Queue<Vector3Int> MovementQueue = new Queue<Vector3Int>(); 
@@ -45,7 +48,7 @@ namespace Assets.Scripts.Entity.AI
 
         void GetPath()
         {
-             var current = Brain.Movement.Location;
+            var current = Brain.Movement.Location;
             var curHex = OffsetCoord.RFromUnity(current);
             var tarhex = OffsetCoord.RFromUnity(Target);
             var line = FractionalHex.HexLinedraw(curHex, tarhex);
