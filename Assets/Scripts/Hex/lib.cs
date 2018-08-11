@@ -102,6 +102,16 @@ struct Hex
         return Subtract(b).Length();
     }
 
+    public static Hex Neighbor(Hex hex, int direction, int distance)
+    {
+        for (int idx = 0; idx < distance; idx++)
+        {
+            hex = hex.Neighbor( direction);
+        }
+        return hex;
+
+    }
+
 }
 
 struct FractionalHex

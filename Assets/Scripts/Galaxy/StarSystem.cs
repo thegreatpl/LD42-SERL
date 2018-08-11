@@ -6,20 +6,29 @@ using UnityEngine.UI;
 
 public class StarSystem : MonoBehaviour {
 
+    /// <summary>
+    /// The main menu object. 
+    /// </summary>
+    public MenuController MainMenuScreen; 
+
     public Tilemap Tilemap;
 
     public Text Position;
 
     public Camera Camera;
 
+    public GalaxyGenerator GalaxyGenerator;
+
+    public Spritemanager Spritemanager; 
 
 
 	// Use this for initialization
 	void Start () {
         Tilemap = GetComponent<Tilemap>();
+        GalaxyGenerator = GetComponent<GalaxyGenerator>();
+        Spritemanager = GetComponent<Spritemanager>();
 
-
-
+        LoadMainMenu(); 
 	}
 	
 	// Update is called once per frame
@@ -42,12 +51,58 @@ public class StarSystem : MonoBehaviour {
         return Tilemap.CellToWorld(tilePos); 
     }
 
-
+    /// <summary>
+    /// Whether or not the tile is passable. 
+    /// </summary>
+    /// <param name="tilePos"></param>
+    /// <returns></returns>
     public bool IsPassable(Vector3Int tilePos)
     {
         if (Tilemap.HasTile(tilePos))
             return true;
 
         return false; 
+    }
+
+    /// <summary>
+    /// Gets the movement cost of this tile. 
+    /// </summary>
+    /// <param name="tilePos"></param>
+    /// <returns></returns>
+    public int GetMovementCost(Vector3Int tilePos)
+    {
+        if (!IsPassable(tilePos))
+            return int.MaxValue;
+
+        return ((SpaceTile)Tilemap.GetTile(tilePos))?.MovementCost ?? 1; 
+    }
+
+
+    /// <summary>
+    /// Starts a new game. 
+    /// </summary>
+    public void StartNewGame()
+    {
+        GalaxyGenerator.GenerateGalaxy();
+        LoadMainGameScreen(); 
+    }
+
+    /// <summary>
+    /// Loads the in game screen. 
+    /// </summary>
+    public void LoadMainGameScreen()
+    {
+        MainMenuScreen.ClearMenu();
+        MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape); 
+    }
+
+
+    /// <summary>
+    /// Loads the main menu screen. 
+    /// </summary>
+    public void LoadMainMenu()
+    {
+        MainMenuScreen.ClearMenu(); 
+        MainMenuScreen.AddButton("newgame", "n - Start New Game", StartNewGame, KeyCode.N);
     }
 }

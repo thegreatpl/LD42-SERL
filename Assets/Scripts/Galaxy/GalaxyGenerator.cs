@@ -3,27 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI;
+using System.Linq; 
 
 public class GalaxyGenerator : MonoBehaviour {
 
     public Tilemap Tilemap;
 
-    public TileBase EmptySpace;
+
 
     public StarSystem StarSystem;
 
-    public Spritemanager Spritemanager; 
+    public Spritemanager Spritemanager;
 
-    //public Canvas WorldCanvas;
 
-    //public Camera Camera;
+    public int GalaxyRadius = 100;
 
+    public int StarSystemAttempts = 40;
+
+    public int MinPlanets = 2; 
+
+    public int MaxPlanets = 12; 
+
+    #region tileTypes
+    public TileBase EmptySpace;
+
+    public List<TileBase> Star;
+
+    public TileBase Planet; 
+
+    #endregion
     // Use this for initialization
     void Start () {
         Tilemap = GetComponent<Tilemap>();
         StarSystem = GetComponent<StarSystem>();
         Spritemanager = GetComponent<Spritemanager>(); 
+
 	}
 	
 	// Update is called once per frame
@@ -31,18 +45,103 @@ public class GalaxyGenerator : MonoBehaviour {
 		
 	}
 
+
+
     /// <summary>
     /// Generates the galaxy. 
     /// </summary>
+    public void GenerateGalaxy()
+    {
+        Tilemap.ClearAllTiles();
+        LoadGraphics();
+        GenerateMap(100); 
+    }
+
+    /// <summary>
+    /// Loads the graphics in. 
+    /// </summary>
+    public void LoadGraphics()
+    {
+        EmptySpace = new SpaceTile() { color = Spritemanager.Colors["GREY"], sprite = Spritemanager.GetSprite("space") };
+        Star = new List<TileBase>();
+        Star.Add(new SpaceTile()
+        {
+            color = Spritemanager.Colors["YELLOW"],
+            sprite = Spritemanager.GetSprite("star1"),
+            MovementCost = 3
+        }); 
+        Star.Add(new SpaceTile()
+        {
+            color = Spritemanager.Colors["RED"],
+                sprite = Spritemanager.GetSprite("star1"),
+                MovementCost = 3
+        });
+        //Star.Add(new SpaceTile()
+        //{
+        //    color = Spritemanager.Colors["BROWN"],
+        //    sprite = Spritemanager.GetSprite("star1"),
+        //    MovementCost = 3
+        //});
+
+        Planet = new SpaceTile()
+        {
+            color = Spritemanager.Colors["BROWN"],
+            sprite = Spritemanager.GetSprite("planet1"),
+            MovementCost = 2
+        };
+
+    }
+
+    void GenerateMap(int radius)
+    {
+        var galaxy = GetHexagon(radius, new Vector3Int(0, 0, 0));
+        //populate the base galaxy. 
+        foreach(var t in galaxy)
+            Tilemap.SetTile(t, EmptySpace);
+
+        var claimed = new List<Vector3Int>();
+
+
+        for (int idx = 0; idx < StarSystemAttempts; idx++)
+        {
+            var star = galaxy.Random();
+            if (claimed.Contains(star))
+                continue;
+
+            Tilemap.SetTile(star, Star.Random());
+
+            int maxRadius = UnityEngine.Random.Range(MinPlanets, MaxPlanets);
+            var c = OffsetCoord.RFromUnity(star); 
+            for (int jdx = 1; jdx < maxRadius; jdx++)
+            {
+                var ring = GetRing(c, jdx);
+                var ringAct = ring.Select(x => OffsetCoord.RToUnityCoords(x));
+                if (claimed.Intersect(ringAct).Any())
+                    break;
+                //keep everything in the galaxy. 
+                if (ringAct.Count() != galaxy.Intersect(ringAct).Count())
+                    break; 
+
+                Tilemap.SetTile(ringAct.Random(), Planet); 
+                claimed.AddRange(ringAct); 
+            }
+
+        }
+
+
+
+
+    }
+
+    /// <summary>
+    /// Gets a hexagon. 
+    /// </summary>
     /// <param name="radius"></param>
     /// <param name="start"></param>
-    public void GenerateGalaxy(int radius, Vector3Int start)
+    /// <returns></returns>
+    public List<Vector3Int> GetHexagon(int radius, Vector3Int start)
     {
-
-        //var debugObj = WorldCanvas.GetComponentInChildren<Text>().gameObject; 
-        //debugObj.AddComponent<Text>(); 
-        //debugObj.GetComponent<Text>().fontSize = 1; 
-        
+        var result = new List<Vector3Int>(); 
         for (int q = -radius; q <= radius; q++)
         {
             int r1 = Math.Max(-radius, -q - radius);
@@ -50,21 +149,45 @@ public class GalaxyGenerator : MonoBehaviour {
             for (int r = r1; r <= r2; r++)
             {
                 var hex = new Hex(q, r);
-                var offset = OffsetCoord.RToUnityCoords(hex); 
+                var offset = OffsetCoord.RToUnityCoords(hex);
 
                 var tilePos = new Vector3Int(start.x + offset.x, start.y + offset.y, 0);
-
-
-                //var obj = Instantiate(debugObj);
-                //obj.transform.position = StarSystem.TileToWorld(tilePos);
-
-                //obj.GetComponent<Text>().text = hex.q + ", " + hex.r;
-                //obj.transform.SetParent(WorldCanvas.transform, true);
-                //obj.transform.localScale = new Vector3(1, 1, 1);
-
-
-                Tilemap.SetTile(tilePos, EmptySpace);
+                result.Add(tilePos); 
             }
         }
+        return result; 
     }
+
+    /// <summary>
+    /// Gets a ring around a specific point. 
+    /// </summary>
+    /// <param name="center"></param>
+    /// <param name="radius"></param>
+    /// <returns></returns>
+     static List<Hex> GetRing(Hex center, int radius)
+    {
+        if (radius > 0)
+        {
+            List<Hex> results = new List<Hex>();
+            Hex hex = Hex.Neighbor( center, (int)PointyDirection.SouthWest, radius);
+
+            for (int idx = 0; idx < 6; idx++)
+            {
+                for (int jdx = 0; jdx < radius; jdx++)
+                {
+                    results.Add(hex);
+                    hex = hex.Neighbor(idx);
+                }
+            }
+
+
+            return results;
+        }
+        else
+        {
+            return new List<Hex>() { center };
+        }
+    }
+
+
 }
