@@ -25,7 +25,9 @@ public class StarSystem : MonoBehaviour {
 
     public PrefabManager PrefabManager;
 
-    public TimeController TimeController; 
+    public TimeController TimeController;
+
+    public EntityManager EntityManager; 
 
     public GameObject Cursor; 
 
@@ -35,7 +37,8 @@ public class StarSystem : MonoBehaviour {
         GalaxyGenerator = GetComponent<GalaxyGenerator>();
         Spritemanager = GetComponent<Spritemanager>();
         PrefabManager = GetComponent<PrefabManager>();
-        TimeController = GetComponent<TimeController>(); 
+        TimeController = GetComponent<TimeController>();
+        EntityManager = GetComponent<EntityManager>(); 
 
         LoadMainMenu(); 
 	}

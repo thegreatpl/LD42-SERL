@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4118401379258032}
   - component: {fileID: 212606607577906778}
   - component: {fileID: 114048587332651212}
+  - component: {fileID: 114529021633284462}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -52,6 +53,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722c043a4bc565e478520e5d2f72ee0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StarSystem: {fileID: 0}
+--- !u!114 &114529021633284462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1663384830018846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c83af92732d024d8b35947f24ce1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 0
+  MaxArmor: 0
+  MaxShields: 0
+  HP: 0
+  Armor: 0
+  Shields: 0
+  VisionRange: 0
+  Movement: 0
+  Weapons: []
+  TickControlScript: {fileID: 0}
 --- !u!212 &212606607577906778
 SpriteRenderer:
   m_ObjectHideFlags: 1

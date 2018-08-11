@@ -17,10 +17,14 @@ public class TimeController : MonoBehaviour {
     /// <summary>
     /// Corotine that handles time. 
     /// </summary>
-    Coroutine TickLoop; 
+    Coroutine TickLoop;
+
+
+    EntityManager EntityManager; 
 
 	// Use this for initialization
 	void Start () {
+        EntityManager = GetComponent<EntityManager>(); 
 	}
 	
 	// Update is called once per frame
@@ -62,6 +66,7 @@ public class TimeController : MonoBehaviour {
             }
 
             TimeObjects.ForEach(x => x.EndTick());
+            EntityManager.EndTick(); 
             yield return null; 
         }
     }

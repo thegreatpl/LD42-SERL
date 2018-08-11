@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour {
 	}
 
 
-    public void Move(PointyDirection direction)
+    public virtual void Move(PointyDirection direction)
     {
         Move(Location.GetVectorInDirection(direction)); 
     }
@@ -28,13 +28,14 @@ public class Movement : MonoBehaviour {
     /// Moves to the specified position. 
     /// </summary>
     /// <param name="newLoc"></param>
-    public void Move(Vector3Int newLoc)
+    public virtual bool Move(Vector3Int newLoc)
     {
         if (!StarSystem.IsPassable(newLoc))
-            return; 
+            return false; 
 
         var worldPos = StarSystem.TileToWorld(newLoc);
         transform.position = worldPos;
-        Location = newLoc; 
+        Location = newLoc;
+        return true; 
     }
 }
