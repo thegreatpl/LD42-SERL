@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TickControlScript : MonoBehaviour {
+public class TickControlScript : MonoBehaviour, ICooldown {
 
-
+    public StarSystem StarSystem; 
 
     /// <summary>
     /// How long before this entity can take another action. 
     /// </summary>
-    public int CoolDown = 0; 
+    public int CoolDown { get; set; }
+
+    /// <summary>
+    /// List of all things that use a cooldown. 
+    /// </summary>
+    public List<ICooldown> Cooldowns = new List<ICooldown>(); 
 
 	// Use this for initialization
 	void Start () {
-		
+        CoolDown = 0;
+        StarSystem.TimeController.TimeObjects.Add(this); 
 	}
 	
 	// Update is called once per frame
@@ -34,5 +40,6 @@ public class TickControlScript : MonoBehaviour {
     public void EndTick()
     {
         CoolDown--;
+        Cooldowns.ForEach(x => x.EndTick()); 
     }
 }

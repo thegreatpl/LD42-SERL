@@ -25,7 +25,7 @@ public class TimeController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        TimeObjects.RemoveAll(x => x == null); 
 	}
 
     public void StartNewGame()
@@ -48,7 +48,7 @@ public class TimeController : MonoBehaviour {
             while (Paused)
                 yield return null;
 
-            var thisTick = TimeObjects.Where(x => x.CoolDown <= 0);
+            var thisTick = TimeObjects.Where(x => x != null && x.CoolDown <= 0);
             int updated = 0; 
 
             foreach(var entity in thisTick)
