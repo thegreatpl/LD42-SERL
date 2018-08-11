@@ -9,96 +9,55 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1663384830018846}
+  m_RootGameObject: {fileID: 1378217758403996}
   m_IsPrefabAsset: 1
---- !u!1 &1663384830018846
+--- !u!1 &1378217758403996
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4118401379258032}
-  - component: {fileID: 212606607577906778}
-  - component: {fileID: 114048587332651212}
-  - component: {fileID: 114529021633284462}
-  - component: {fileID: 114716973628599466}
+  - component: {fileID: 4393421910738802}
+  - component: {fileID: 212337513501252794}
+  - component: {fileID: 114561263137438542}
   m_Layer: 0
-  m_Name: Entity
+  m_Name: Battle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4118401379258032
+--- !u!4 &4393421910738802
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663384830018846}
+  m_GameObject: {fileID: 1378217758403996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -19.125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114048587332651212
+--- !u!114 &114561263137438542
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663384830018846}
+  m_GameObject: {fileID: 1378217758403996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722c043a4bc565e478520e5d2f72ee0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 265624b4d902f4d4fa5b58d1e1a33d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StarSystem: {fileID: 0}
---- !u!114 &114529021633284462
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663384830018846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c83af92732d024d8b35947f24ce1aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StarSystem: {fileID: 0}
-  Location: {x: 0, y: 0, z: 0}
-  MaxHP: 0
-  MaxArmor: 0
-  MaxShields: 0
-  HP: 0
-  Armor: 0
-  Shields: 0
-  VisionRange: 0
-  Weight: 0
-  Movement: 0
-  Engines: 0
-  Weapons: []
-  TickControlScript: {fileID: 0}
---- !u!114 &114716973628599466
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663384830018846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc7f2bf6a1280394cae5f1acd8394f95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StarSystem: {fileID: 0}
-  Location: {x: 0, y: 0, z: 0}
---- !u!212 &212606607577906778
+--- !u!212 &212337513501252794
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663384830018846}
+  m_GameObject: {fileID: 1378217758403996}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

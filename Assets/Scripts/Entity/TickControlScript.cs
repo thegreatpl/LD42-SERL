@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TickControlScript : MonoBehaviour, ICooldown {
+public class TickControlScript : MonoBehaviour, ITickable {
 
     public StarSystem StarSystem; 
 

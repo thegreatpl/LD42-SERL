@@ -13,6 +13,13 @@ public enum DamageType
 
 public class Attributes : MonoBehaviour {
 
+    public BattleScript Battle; 
+
+    /// <summary>
+    /// The empire this belongs to, if any. 
+    /// </summary>
+    public EmpireScript Empire; 
+
     /// <summary>
     /// The starsystem entity belong to. 
     /// </summary>

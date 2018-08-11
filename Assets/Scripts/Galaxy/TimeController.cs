@@ -5,7 +5,7 @@ using System.Linq;
 
 public class TimeController : MonoBehaviour {
 
-    public List<TickControlScript> TimeObjects = new List<TickControlScript>();
+    public List<ITickable> TimeObjects = new List<ITickable>();
 
     /// <summary>
     /// Pauses the game. 

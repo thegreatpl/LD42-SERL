@@ -589,6 +589,7 @@ MonoBehaviour:
   Spritemanager: {fileID: 0}
   PrefabManager: {fileID: 0}
   TimeController: {fileID: 0}
+  EntityManager: {fileID: 0}
   Cursor: {fileID: 0}
 --- !u!114 &362664578
 MonoBehaviour:
@@ -647,6 +648,12 @@ MonoBehaviour:
   - Name: Entity
     GameObject: {fileID: 1663384830018846, guid: c8df353c8e5dc4c4695156c2a0fa8e14,
       type: 2}
+  - Name: Battle
+    GameObject: {fileID: 1378217758403996, guid: 4cf3748fcbf07f648a1c1daf5c0d5a3f,
+      type: 2}
+  - Name: Empire
+    GameObject: {fileID: 1173156676227808, guid: 80956696f06f29943b36d2c8073e0493,
+      type: 2}
 --- !u!114 &362664581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,7 +665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c06c409bc9a5c743803862cd3356438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeObjects: []
   Paused: 0
   MaxUpdate: 20
 --- !u!114 &362664582
@@ -672,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f1d397834ba794c8d88252359b3a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entities: []
 --- !u!1 &389344178
 GameObject:
   m_ObjectHideFlags: 0
