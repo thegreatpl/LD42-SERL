@@ -27,6 +27,9 @@ public class GalaxyGenerator : MonoBehaviour {
     public List<Vector3Int> Planets;
 
 
+    public List<Vector3Int> Stars; 
+
+
     public List<string> NameOptions = new List<string>(); 
 
     #region tileTypes
@@ -57,7 +60,8 @@ public class GalaxyGenerator : MonoBehaviour {
     /// </summary>
     public void GenerateGalaxy()
     {
-        Planets = new List<Vector3Int>(); 
+        Planets = new List<Vector3Int>();
+        Stars = new List<Vector3Int>(); 
         Tilemap.ClearAllTiles();
         LoadNames(); 
         LoadGraphics();
@@ -135,6 +139,7 @@ public class GalaxyGenerator : MonoBehaviour {
             tile.color = val.color;
             tile.Region = name; 
             Tilemap.SetTile(star, tile);
+            Stars.Add(star); 
 
             int maxRadius = UnityEngine.Random.Range(MinPlanets, MaxPlanets);
             var c = OffsetCoord.RFromUnity(star); 

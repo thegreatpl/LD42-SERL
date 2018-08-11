@@ -40,6 +40,7 @@ public class BattleScript : MonoBehaviour, ITickable {
             }
 
         }
+
     }
 
 

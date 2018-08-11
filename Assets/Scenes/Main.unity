@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c3ac426b6bdd7479fc57a3714a77a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Active: 1
   ButtonObj: {fileID: 1192052881697734, guid: 42b44a4661af50b4bbf5206dd9d62994, type: 2}
 --- !u!114 &120043147
 MonoBehaviour:
@@ -581,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a40cc7ad34782f40b61ffd0cd32465c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EmpireNo: 20
   MainMenuScreen: {fileID: 120043146}
   Tilemap: {fileID: 362664576}
   Position: {fileID: 402572984}
@@ -612,6 +614,8 @@ MonoBehaviour:
   MinPlanets: 4
   MaxPlanets: 12
   Planets: []
+  Stars: []
+  NameOptions: []
   EmptySpace: {fileID: 0}
   Star: []
   Planet: {fileID: 0}
@@ -660,6 +664,9 @@ MonoBehaviour:
   - Name: Colony
     GameObject: {fileID: 1779749452793454, guid: 2fa1fec962c3ac94faa203e58fe1f44f,
       type: 2}
+  - Name: Menu
+    GameObject: {fileID: 1541041698578040, guid: c8b8dd8ce435e5a49892672a9b476024,
+      type: 2}
 --- !u!114 &362664581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,6 +707,7 @@ MonoBehaviour:
   Spritemanager: {fileID: 0}
   Empires: []
   EntityManager: {fileID: 0}
+  EmpireSprites: []
 --- !u!1 &389344178
 GameObject:
   m_ObjectHideFlags: 0
