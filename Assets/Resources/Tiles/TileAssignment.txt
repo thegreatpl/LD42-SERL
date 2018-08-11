@@ -2,3 +2,7 @@
 null:U+0000:magenta
 -space
 space:U+002E
+star1:U+06DE
+planet1:U+004F
+smallplanet:U+006F
+cursor:U+0058

@@ -13,6 +13,8 @@ public class GalaxyGenerator : MonoBehaviour {
 
     public StarSystem StarSystem;
 
+    public Spritemanager Spritemanager; 
+
     //public Canvas WorldCanvas;
 
     //public Camera Camera;
@@ -20,8 +22,8 @@ public class GalaxyGenerator : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Tilemap = GetComponent<Tilemap>();
-        StarSystem = GetComponent<StarSystem>(); 
-        GenerateGalaxy(25, new Vector3Int(0, 0, 0)); 
+        StarSystem = GetComponent<StarSystem>();
+        Spritemanager = GetComponent<Spritemanager>(); 
 	}
 	
 	// Update is called once per frame
@@ -29,6 +31,11 @@ public class GalaxyGenerator : MonoBehaviour {
 		
 	}
 
+    /// <summary>
+    /// Generates the galaxy. 
+    /// </summary>
+    /// <param name="radius"></param>
+    /// <param name="start"></param>
     public void GenerateGalaxy(int radius, Vector3Int start)
     {
 
