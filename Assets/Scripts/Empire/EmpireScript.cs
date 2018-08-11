@@ -106,7 +106,7 @@ public class EmpireScript : MonoBehaviour {
 
                 foreach (var cs in colonieships)
                 {
-                    if (planets.Count > 0)
+                    if (planets.Count == 0)
                     {
                         break;
                     }
@@ -147,7 +147,8 @@ public class EmpireScript : MonoBehaviour {
         atr.TickControlScript = ti;
 
         EntityManager.Entities.Add(atr);
-        Ships.Add(br); 
+        Ships.Add(br);
+        obj.name = $"{design.Name}:{Id}"; 
 
         atr.Initialize(design);
 
@@ -166,12 +167,14 @@ public class EmpireScript : MonoBehaviour {
         atr.Empire = this;
         atr.Location = location;
         var c = obj.GetComponent<ColonyControl>();
-        c.StarSystem = StarSystem;
+        c.StarSystem = StarSystem;  
         c.Location = location;
         c.Empire = this; 
         
         EntityManager.Entities.Add(atr);
-        Colonies.Add(c); 
+        Colonies.Add(c);
+
+        obj.name = $"ColonyPlanet:{Id}"; 
 
         if (source != null)
             Destroy(source); 

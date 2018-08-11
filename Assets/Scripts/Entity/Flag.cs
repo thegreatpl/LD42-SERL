@@ -10,6 +10,11 @@ public class Flag : MonoBehaviour {
     /// </summary>
     public static bool EnableFlash = true; 
 
+    /// <summary>
+    /// Empty prefab. 
+    /// </summary>
+    public static GameObject EmptyPrefab; 
+
     SpriteRenderer UsualSpriteRenderer;
 
     SpriteRenderer EmpireSpriteRenders; 
@@ -30,7 +35,8 @@ public class Flag : MonoBehaviour {
         BaseAttributes = GetComponent<BaseAttributes>(); 
         UsualTexture = UsualSpriteRenderer.sprite;
         EmpireTexture = BaseAttributes.Empire.EmpireBanner;
-        var go = Instantiate(new GameObject(), transform); 
+        var go = Instantiate(EmptyPrefab, transform);
+        go.transform.parent = transform; 
         EmpireSpriteRenders = go.AddComponent<SpriteRenderer>();
         if (EmpireTexture != null)
         {

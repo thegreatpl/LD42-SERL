@@ -93,7 +93,7 @@ public class EmpireManager : MonoBehaviour {
                      Name = "Colony",
                      Types = new List<string>() { "colony"},
                    Cost = 100,
-                   Weight = 100
+                   Weight = 50
                },
         };
 
