@@ -23,8 +23,8 @@ public class EmpireManager : MonoBehaviour {
 	void Start () {
         StarSystem = GetComponent<StarSystem>();
         EntityManager = GetComponent<EntityManager>();
-        Spritemanager = GetComponent<Spritemanager>(); 
-
+        Spritemanager = GetComponent<Spritemanager>();
+        LoadComponents(); 
         LoadBasicDesigns(); 
 	}
 	
@@ -36,15 +36,25 @@ public class EmpireManager : MonoBehaviour {
     public void CreateNewEmpire()
     {
         if (EmpireScript.Entity == null)
-            EmpireScript.Entity = StarSystem.PrefabManager.GetPrefab("Entity"); 
+            EmpireScript.Entity = StarSystem.PrefabManager.GetPrefab("Entity");
+        if (EmpireScript.Colony == null)
+            EmpireScript.Colony = StarSystem.PrefabManager.GetPrefab("Colony"); 
 
         var prefab = StarSystem.PrefabManager.GetPrefab("Empire");
         var script = Instantiate(prefab).GetComponent<EmpireScript>();
         Empires.Add(script);
 
+        var uncolonized = EntityManager.GetAllUncolonized();
+        if (uncolonized.Count < 1)
+            return;
+
         script.EntityManager = EntityManager;
         script.Designs = BasicDesigns;
         script.StarSystem = StarSystem;
+        script.Resouces = 100; 
+
+        script.CreateColony(uncolonized.Random()); 
+        
         script.StartAi(); 
     }
 
@@ -102,7 +112,7 @@ public class EmpireManager : MonoBehaviour {
         {
             Name = "Colony",
             Type = "Colony",
-            Sprite = Spritemanager.GetSprite("colony"),
+            Sprite = Spritemanager.GetSprite("colonyship"),
             MaxHp = 10,
             BaseComponents = new List<BaseComponent>()
             {

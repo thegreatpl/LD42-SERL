@@ -19,20 +19,23 @@ public class ColonyControl : MonoBehaviour, ITickable {
 
     public int coolDown;
 
-    public bool mining = true;
+    public bool mining = false;
 
-    public bool building = true; 
+    public bool building = false; 
 
     ShipDesign design;
-    float buildLeft; 
-    
+    float buildLeft;
 
+    bool init = false; 
     // Use this for initialization
     void Start () {
+
         Colony = StarSystem.GetSpaceTile(Location);
         StarSystem.TimeController.TimeObjects.Add(this);
         var sp = GetComponent<SpriteRenderer>();
-        sp.sprite = StarSystem.Spritemanager.GetSprite("colony"); 
+        sp.sprite = StarSystem.Spritemanager.GetSprite("colony");
+        mining = true;
+        init = true; 
 	}
 	
 	// Update is called once per frame
@@ -49,6 +52,9 @@ public class ColonyControl : MonoBehaviour, ITickable {
 
     public void RunTick()
     {
+        if (!init)
+            return;
+
         if (mining)
             Mine();
 
@@ -75,12 +81,16 @@ public class ColonyControl : MonoBehaviour, ITickable {
 
     void Build()
     {
-        buildLeft -= Buildrate; 
-        if (buildLeft < 0)
+        if (design != null)
         {
-            Empire.CreateEntity(Location, design);
-            building = false; 
-            mining = true; 
+            buildLeft -= Buildrate;
+            if (buildLeft < 0)
+            {
+                Empire.CreateEntity(Location, design);
+                design = null; 
+                building = false;
+                mining = true;
+            }
         }
     }
 

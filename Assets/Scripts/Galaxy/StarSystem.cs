@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class StarSystem : MonoBehaviour {
 
+    public int EmpireNo = 20; 
+
     /// <summary>
     /// The main menu object. 
     /// </summary>
@@ -32,6 +34,9 @@ public class StarSystem : MonoBehaviour {
     public EmpireManager EmpireManager; 
 
     public GameObject Cursor; 
+
+
+    
 
 	// Use this for initialization
 	void Start () {
@@ -109,7 +114,7 @@ public class StarSystem : MonoBehaviour {
         GalaxyGenerator.GenerateGalaxy();
         LoadMainGameScreen();
         InitCursor();
-        for(int idx = 0; idx < 5; idx++)
+        for(int idx = 0; idx < EmpireNo; idx++)
         {
             EmpireManager.CreateNewEmpire(); 
         }

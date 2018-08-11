@@ -40,17 +40,32 @@ public class EntityManager : MonoBehaviour {
             {
                 if (Battles.ContainsKey(ent.Location))
                 {
-                    Battles[ent.Location].Entities.Add(ent); 
+                        Battles[ent.Location].Entities.Add(ent);
+                    ent.Battle = Battles[ent.Location]; 
                 }
                 else
                 {
                    var bat = Instantiate(BattlePrefab, StarSystem.TileToWorld(ent.Location), BattlePrefab.transform.rotation).GetComponent<BattleScript>();
                     bat.StarSystem = StarSystem; 
                     Battles.Add(ent.Location, bat);
-                    bat.Entities.Add(ent); 
+                    bat.Entities.Add(ent);
+                    ent.Battle = bat; 
 
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Gets all uncolonized systems. 
+    /// </summary>
+    /// <returns></returns>
+    public List<Vector3Int> GetAllUncolonized()
+    {
+        var planets = StarSystem.GalaxyGenerator.Planets;
+        var colonies = Entities.OfType<ColonyAttributes>().Select(x => x.Location);
+
+        planets.RemoveAll(x => colonies.Contains(x));
+        return planets; 
     }
 }

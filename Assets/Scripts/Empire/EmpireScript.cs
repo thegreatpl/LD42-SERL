@@ -65,6 +65,8 @@ public class EmpireScript : MonoBehaviour {
 
     public bool Hostile(int otherId)
     {
+        if (otherId == Id)
+            return false; 
         //todo, implement diplomacy. 
         return true; 
     }
@@ -81,7 +83,7 @@ public class EmpireScript : MonoBehaviour {
         {
             if (Resouces > design.Cost)
             {
-                var col = Colonies.Where(x => !x.building).OrderBy(x => x.Colony.MineralValue).FirstOrDefault() ;
+                var col = Colonies.Where(x => !x.building).OrderBy(x => x.Colony?.MineralValue).FirstOrDefault() ;
 
                 if (col != null)
                 {
@@ -96,10 +98,7 @@ public class EmpireScript : MonoBehaviour {
             var colonieships = Ships.Where(x => x.Attributes.CanColonize && x.State != "Colonize");
             if (colonieships.Count() > 0)
             {
-                var planets = StarSystem.GalaxyGenerator.Planets;
-                var colonies = EntityManager.Entities.OfType<ColonyAttributes>().Select(x => x.Location);
-
-                planets.RemoveAll(x => colonies.Contains(x));
+                var planets = EntityManager.GetAllUncolonized(); 
 
                 foreach (var cs in colonieships)
                 {
@@ -143,7 +142,8 @@ public class EmpireScript : MonoBehaviour {
         ti.StarSystem = StarSystem;
         atr.TickControlScript = ti;
 
-        EntityManager.Entities.Add(atr); 
+        EntityManager.Entities.Add(atr);
+        Ships.Add(br); 
 
         atr.Initialize(design);
 
@@ -156,20 +156,23 @@ public class EmpireScript : MonoBehaviour {
 
 
         var loc = StarSystem.TileToWorld(location);
-        var obj = Instantiate(Colony, loc, Entity.transform.rotation);
+        var obj = Instantiate(Colony, loc, Colony.transform.rotation);
         var atr = obj.GetComponent<ColonyAttributes>();
         atr.StarSystem = StarSystem;
         atr.Empire = this;
         atr.Location = location;
         var c = obj.GetComponent<ColonyControl>();
         c.StarSystem = StarSystem;
-        c.Location = location; 
+        c.Location = location;
+        c.Empire = this; 
         
-
-
         EntityManager.Entities.Add(atr);
+        Colonies.Add(c); 
 
         if (source != null)
             Destroy(source); 
     }
+
+
+
 }
