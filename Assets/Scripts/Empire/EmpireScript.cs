@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; 
+using System.Linq;
+using Assets.Scripts.Entity.AI;
 
 public class EmpireScript : MonoBehaviour {
 
@@ -24,12 +25,19 @@ public class EmpireScript : MonoBehaviour {
     /// <summary>
     /// The entity gameobject. 
     /// </summary>
-    public static GameObject Entity; 
+    public static GameObject Entity;
+
+    public static GameObject Colony; 
 
 
     public Dictionary<string, ShipDesign> Designs = new Dictionary<string, ShipDesign>();
 
-    public List<EntityBrain> Ships = new List<EntityBrain>(); 
+    public List<EntityBrain> Ships = new List<EntityBrain>();
+
+    /// <summary>
+    /// The colonies of this empire. 
+    /// </summary>
+    public List<ColonyControl> Colonies = new List<ColonyControl>(); 
 
     Coroutine Ai; 
 
@@ -41,7 +49,8 @@ public class EmpireScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Ships.RemoveAll(x => x == null); 
+        Ships.RemoveAll(x => x == null);
+        Colonies.RemoveAll(x => x == null); 
 	}
 
     public void StartAi()
@@ -63,22 +72,58 @@ public class EmpireScript : MonoBehaviour {
 
     public IEnumerator EmpireAi()
     {
-        CreateEntity(StarSystem.GalaxyGenerator.Planets.Random(), Designs.Random().Value);
-        CreateEntity(StarSystem.GalaxyGenerator.Planets.Random(), Designs.Random().Value);
-        CreateEntity(StarSystem.GalaxyGenerator.Planets.Random(), Designs.Random().Value);
-        CreateEntity(StarSystem.GalaxyGenerator.Planets.Random(), Designs.Random().Value);
-        yield return null; 
+        yield return null;
 
-        foreach(var e in Ships)
-        {
-            e.MoveTo(StarSystem.GalaxyGenerator.Planets.Random()); 
-        }
+
+        var design = Designs.Random().Value;
+
         while (true)
         {
-            yield return new WaitForSeconds(60);
-            var finished = Ships.Where(x => x.State == "Guard"); 
-            foreach(var f in finished)
-                f.MoveTo(StarSystem.GalaxyGenerator.Planets.Random());
+            if (Resouces > design.Cost)
+            {
+                var col = Colonies.Where(x => !x.building).OrderBy(x => x.Colony.MineralValue).FirstOrDefault() ;
+
+                if (col != null)
+                {
+                    col.BuildShip(design); 
+                    design = Designs.Random().Value;
+                }
+                
+            }
+
+            yield return null; 
+
+            var colonieships = Ships.Where(x => x.Attributes.CanColonize && x.State != "Colonize");
+            if (colonieships.Count() > 0)
+            {
+                var planets = StarSystem.GalaxyGenerator.Planets;
+                var colonies = EntityManager.Entities.OfType<ColonyAttributes>().Select(x => x.Location);
+
+                planets.RemoveAll(x => colonies.Contains(x));
+
+                foreach (var cs in colonieships)
+                {
+                    if (planets.Count > 0)
+                    {
+                        break;
+                    }
+                    var pos = planets.OrderBy(x => OffsetCoord.RFromUnity(x).Distance(OffsetCoord.RFromUnity(cs.Movement.Location)));
+                    var t = pos.First(); 
+                    cs.SetState(new ColonizeState(cs, t));
+                    planets.Remove(t); 
+                }
+            }
+            
+
+            yield return null; 
+
+
+
+
+            //yield return new WaitForSeconds(60);
+            //var finished = Ships.Where(x => x.State == "Guard"); 
+            //foreach(var f in finished)
+            //    f.MoveTo(StarSystem.GalaxyGenerator.Planets.Random());
 
         }
     }
@@ -98,9 +143,33 @@ public class EmpireScript : MonoBehaviour {
         ti.StarSystem = StarSystem;
         atr.TickControlScript = ti;
 
-
+        EntityManager.Entities.Add(atr); 
 
         atr.Initialize(design);
 
+    }
+
+    public void CreateColony(Vector3Int location, GameObject source = null)
+    {
+        if (EntityManager.Entities.OfType<ColonyAttributes>().FirstOrDefault(x => x.Location == location) != null)
+            return; 
+
+
+        var loc = StarSystem.TileToWorld(location);
+        var obj = Instantiate(Colony, loc, Entity.transform.rotation);
+        var atr = obj.GetComponent<ColonyAttributes>();
+        atr.StarSystem = StarSystem;
+        atr.Empire = this;
+        atr.Location = location;
+        var c = obj.GetComponent<ColonyControl>();
+        c.StarSystem = StarSystem;
+        c.Location = location; 
+        
+
+
+        EntityManager.Entities.Add(atr);
+
+        if (source != null)
+            Destroy(source); 
     }
 }

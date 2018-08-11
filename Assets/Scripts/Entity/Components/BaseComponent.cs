@@ -13,7 +13,9 @@ namespace Assets.Scripts.Entity.Components
 
         public List<string> Types;
 
-        public float Weight; 
+        public float Weight;
+
+        public int Cost; 
 
         public abstract BaseComponent Clone(); 
     }

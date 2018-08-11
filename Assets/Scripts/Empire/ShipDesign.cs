@@ -17,7 +17,9 @@ namespace Assets.Scripts.Empire
 
         public int MaxHp;
 
-        public Sprite Sprite; 
+        public Sprite Sprite;
+
+        public int Cost; 
 
         public List<BaseComponent> BaseComponents = new List<BaseComponent>(); 
     }

@@ -10,7 +10,7 @@ public class BattleScript : MonoBehaviour, ITickable {
     public int CoolDown => 0;
 
 
-    public List<Attributes> Entities = new List<Attributes>();
+    public List<BaseAttributes> Entities = new List<BaseAttributes>();
 
     public SpriteRenderer SpriteRenderer; 
 
@@ -22,7 +22,7 @@ public class BattleScript : MonoBehaviour, ITickable {
 
     public void RunTick()
     {
-        foreach(var entity in Entities)
+        foreach(var entity in Entities.OfType<Attributes>())
         {
             var weapons = entity.Weapons.Where(x => x.CoolDown == 0);
             if (weapons.Count() == 0)

@@ -11,7 +11,7 @@ public class EntityManager : MonoBehaviour {
 
     GameObject BattlePrefab; 
 
-    public List<Attributes> Entities = new List<Attributes>();
+    public List<BaseAttributes> Entities = new List<BaseAttributes>();
 
     Dictionary<Vector3Int, BattleScript> Battles = new Dictionary<Vector3Int, BattleScript>(); 
 

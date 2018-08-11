@@ -2,6 +2,7 @@
 using Assets.Scripts.Entity.Components;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EmpireManager : MonoBehaviour {
@@ -14,7 +15,9 @@ public class EmpireManager : MonoBehaviour {
 
     public EntityManager EntityManager;
 
-    public Dictionary<string, ShipDesign> BasicDesigns = new Dictionary<string, ShipDesign>(); 
+    public Dictionary<string, ShipDesign> BasicDesigns = new Dictionary<string, ShipDesign>();
+
+    public List<BaseComponent> components = new List<BaseComponent>(); 
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +48,40 @@ public class EmpireManager : MonoBehaviour {
         script.StartAi(); 
     }
 
+    public BaseComponent GetComponentType(string type)
+    {
+        return components.FirstOrDefault(x => x.Types.Contains(type)); 
+
+    }
+
+    public void LoadComponents()
+    {
+        components = new List<BaseComponent>()
+        {
+             new WeaponComponent()
+                {
+                    Amount = 1,
+                 CoolDownTime = 3,
+                 DamageType = DamageType.Mass,
+                 Name = "Cannon",
+                 Weight = 0.5f,
+                 Types = new List<string>(){"weapon", "mass"}
+                },
+                new EngineComponent()
+                {
+                    Power = 1, Weight = 0.5f, Name = "Engine", Cost = 20, Types = new List<string>(){"engine"}
+                },
+                 new ColonyComponent()
+               {
+                     Name = "Colony",
+                     Types = new List<string>() { "colony"},
+                   Cost = 100,
+                   Weight = 100
+               },
+        };
+
+    }
+
     public void LoadBasicDesigns()
     {
         BasicDesigns = new Dictionary<string, ShipDesign>();
@@ -56,17 +93,24 @@ public class EmpireManager : MonoBehaviour {
             MaxHp = 10,
             BaseComponents = new List<BaseComponent>()
             {
-                new WeaponComponent()
-                {
-                    Amount = 1, CoolDownTime = 3, DamageType = DamageType.Mass, Name = "Cannon", Weight = 0.5f
-                }, 
-                new EngineComponent()
-                {
-                    Power = 1, Weight = 0.5f
-                }, 
+                GetComponentType("engine"), GetComponentType("weapon")
             }
         };
-        BasicDesigns.Add(corvette.Name, corvette); 
+        corvette.Cost = corvette.BaseComponents.Sum(x => x.Cost); 
+        BasicDesigns.Add(corvette.Name, corvette);
+        var colony = new ShipDesign()
+        {
+            Name = "Colony",
+            Type = "Colony",
+            Sprite = Spritemanager.GetSprite("colony"),
+            MaxHp = 10,
+            BaseComponents = new List<BaseComponent>()
+            {
+                GetComponentType("engine"), GetComponentType("colony")
+            }
+        };
+        colony.Cost = colony.BaseComponents.Sum(x => x.Cost); 
+        BasicDesigns.Add(colony.Name, colony);
     }
 
 

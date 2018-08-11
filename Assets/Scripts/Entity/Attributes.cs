@@ -29,7 +29,12 @@ public class Attributes : BaseAttributes {
     /// <summary>
     /// How much engine power there is. 
     /// </summary>
-    public int Engines; 
+    public int Engines;
+
+    /// <summary>
+    /// Whether or not this ship can colonize. 
+    /// </summary>
+    public bool CanColonize; 
 
 
     /// <summary>
@@ -63,41 +68,7 @@ public class Attributes : BaseAttributes {
             Shields = 0; 
 	}
 
-    /// <summary>
-    /// Causes this entity to take damage. 
-    /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="amount"></param>
-    public void TakeDamage(DamageType damage, float amount)
-    {
-        if (Shields > 0)
-        {
-            switch(damage)
-            {
-                case DamageType.Energy:
-                    Shields -= amount * 1.5f;
-                    break;
-                default:
-                    Shields -= amount;
-                    break; 
-            }
-            return; 
-        }
-        if (Armor > 0)
-        {
-            switch(damage)
-            {
-                case DamageType.Mass:
-                    Armor -= amount * 1.5f;
-                    break;
-                default:
-                    Armor -= amount;
-                    break; 
-            }
-        }
-
-        HP -= amount; 
-    }
+   
 
     /// <summary>
     /// Initializes this entities stuff. 
@@ -124,7 +95,11 @@ public class Attributes : BaseAttributes {
         BaseComponents.OfType<ArmorComponent>().ToList().ForEach(x => MaxArmor += x.ArmorValue);
         Engines = 0; 
         BaseComponents.OfType<EngineComponent>().ToList().ForEach(x => Engines += x.Power);
-        VisionRange = BaseComponents.OfType<SensorComponent>().Count(); 
+        VisionRange = BaseComponents.OfType<SensorComponent>().Count();
+
+        CanColonize = false; 
+        if (BaseComponents.OfType<ColonyComponent>().Count() > 0)
+            CanColonize = true; 
 
         HP = MaxHP;
         Armor = MaxArmor;

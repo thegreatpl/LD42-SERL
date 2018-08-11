@@ -12,9 +12,9 @@ namespace Assets.Scripts.Entity.AI
         public override string Type { get { return "Move"; } }
 
 
-        public Vector3Int Target;
+        public  Vector3Int Target;
 
-        Queue<Vector3Int> MovementQueue = new Queue<Vector3Int>(); 
+        protected  Queue<Vector3Int> MovementQueue = new Queue<Vector3Int>(); 
 
         public MoveState(EntityBrain brain, Vector3Int target) : base(brain) { Target = target; }
 
@@ -38,6 +38,11 @@ namespace Assets.Scripts.Entity.AI
                 return; 
             }
 
+            Move(); 
+        }
+
+        public void Move()
+        {
             if (MovementQueue.Count < 1)
             {
                 GetPath(); 
@@ -46,7 +51,7 @@ namespace Assets.Scripts.Entity.AI
             Brain.Movement.Move(MovementQueue.Dequeue()); 
         }
 
-        void GetPath()
+        public virtual void GetPath()
         {
             var current = Brain.Movement.Location;
             var curHex = OffsetCoord.RFromUnity(current);

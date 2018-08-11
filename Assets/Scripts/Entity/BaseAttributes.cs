@@ -61,5 +61,47 @@ public class BaseAttributes : MonoBehaviour
     public int VisionRange;
 
 
+     void Update()
+    {
+        if (HP < 0)
+            Destroy(gameObject); 
+    }
+
+
+    /// <summary>
+    /// Causes this entity to take damage. 
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="amount"></param>
+    public void TakeDamage(DamageType damage, float amount)
+    {
+        if (Shields > 0)
+        {
+            switch (damage)
+            {
+                case DamageType.Energy:
+                    Shields -= amount * 1.5f;
+                    break;
+                default:
+                    Shields -= amount;
+                    break;
+            }
+            return;
+        }
+        if (Armor > 0)
+        {
+            switch (damage)
+            {
+                case DamageType.Mass:
+                    Armor -= amount * 1.5f;
+                    break;
+                default:
+                    Armor -= amount;
+                    break;
+            }
+        }
+
+        HP -= amount;
+    }
 }
 
