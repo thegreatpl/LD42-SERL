@@ -92,6 +92,11 @@ public class StarSystem : MonoBehaviour {
         return ((SpaceTile)Tilemap.GetTile(tilePos))?.MovementCost ?? 1; 
     }
 
+    public SpaceTile GetSpaceTile(Vector3Int tilePos)
+    {
+        return (SpaceTile)Tilemap.GetTile(tilePos); 
+    }
+
 
     /// <summary>
     /// Starts a new game. 

@@ -24,14 +24,17 @@ public class GalaxyGenerator : MonoBehaviour {
 
     public int MaxPlanets = 12;
 
-    public List<Vector3Int> Planets; 
+    public List<Vector3Int> Planets;
+
+
+    public List<string> NameOptions = new List<string>(); 
 
     #region tileTypes
-    public TileBase EmptySpace;
+    public SpaceTile EmptySpace;
 
-    public List<TileBase> Star;
+    public List<SpaceTile> Star;
 
-    public TileBase Planet; 
+    public SpaceTile Planet; 
 
     #endregion
     // Use this for initialization
@@ -56,6 +59,7 @@ public class GalaxyGenerator : MonoBehaviour {
     {
         Planets = new List<Vector3Int>(); 
         Tilemap.ClearAllTiles();
+        LoadNames(); 
         LoadGraphics();
         GenerateMap(100); 
     }
@@ -66,7 +70,7 @@ public class GalaxyGenerator : MonoBehaviour {
     public void LoadGraphics()
     {
         EmptySpace = new SpaceTile() { color = Spritemanager.Colors["GREY"], sprite = Spritemanager.GetSprite("space") };
-        Star = new List<TileBase>();
+        Star = new List<SpaceTile>();
         Star.Add(new SpaceTile()
         {
             color = Spritemanager.Colors["YELLOW"],
@@ -99,8 +103,10 @@ public class GalaxyGenerator : MonoBehaviour {
     {
         var galaxy = GetHexagon(radius, new Vector3Int(0, 0, 0));
         //populate the base galaxy. 
-        foreach(var t in galaxy)
-            Tilemap.SetTile(t, EmptySpace);
+        foreach (var t in galaxy) {
+            var ti = ScriptableObject.CreateInstance<SpaceTile>(); ti.FromTile(EmptySpace); 
+            Tilemap.SetTile(t, ti);
+        }
 
         var claimed = new List<Vector3Int>();
 
@@ -111,7 +117,24 @@ public class GalaxyGenerator : MonoBehaviour {
             if (claimed.Contains(star))
                 continue;
 
-            Tilemap.SetTile(star, Star.Random());
+            string name;
+            if (NameOptions.Count > 0)
+            {
+                name = NameOptions.Random();
+                NameOptions.Remove(name);
+            }
+            else
+                name = $"{idx}"; 
+
+            var val = (SpaceTile) Star.Random(); 
+            var tile = ScriptableObject.CreateInstance<SpaceTile>();
+            tile.Name = name;
+            tile.MineralValue = 0;
+            tile.MovementCost = val.MovementCost;
+            tile.sprite = val.sprite;
+            tile.color = val.color;
+            tile.Region = name; 
+            Tilemap.SetTile(star, tile);
 
             int maxRadius = UnityEngine.Random.Range(MinPlanets, MaxPlanets);
             var c = OffsetCoord.RFromUnity(star); 
@@ -129,8 +152,23 @@ public class GalaxyGenerator : MonoBehaviour {
                     break;
 
                 var p = ringAct.Random();
-                Tilemap.SetTile(p, Planet);
+               var t = ScriptableObject.CreateInstance<SpaceTile>();
+                t.MovementCost = Planet.MovementCost;
+                t.Name = $"{name} {jdx}";
+                t.Region = name;
+                t.MineralValue = UnityEngine.Random.Range(3, 10);
+                t.sprite = Planet.sprite;
+                t.color = Planet.color; 
+
+                Tilemap.SetTile(p, t);
                 Planets.Add(p); 
+
+                foreach(var r in ringAct)
+                {
+                    var oldt = (SpaceTile)Tilemap.GetTile(r);
+                    oldt.Region = name; 
+                }
+
                 claimed.AddRange(ringAct); 
             }
 
@@ -195,6 +233,40 @@ public class GalaxyGenerator : MonoBehaviour {
         {
             return new List<Hex>() { center };
         }
+    }
+
+    public void LoadNames()
+    {
+        NameOptions = new List<string>();
+
+        var pre = new List<string>()
+        {
+            "Alpha ",
+            "Beta ",
+            "New ",
+            "Prime ", 
+            "Proxima "
+        };
+
+        var end = new List<string>()
+        {
+            "Centuri",
+            "Sol",
+            "Gaia", 
+            "Voltaire", 
+            "Garden", 
+            
+
+        }; 
+        foreach(var e in end)
+        {
+            NameOptions.Add(e); 
+            foreach(var p in pre)
+            {
+                NameOptions.Add(p + e); 
+            }
+        }
+
     }
 
 

@@ -611,6 +611,7 @@ MonoBehaviour:
   StarSystemAttempts: 40
   MinPlanets: 4
   MaxPlanets: 12
+  Planets: []
   EmptySpace: {fileID: 0}
   Star: []
   Planet: {fileID: 0}
@@ -655,6 +656,9 @@ MonoBehaviour:
       type: 2}
   - Name: Empire
     GameObject: {fileID: 1173156676227808, guid: 80956696f06f29943b36d2c8073e0493,
+      type: 2}
+  - Name: Colony
+    GameObject: {fileID: 1779749452793454, guid: 2fa1fec962c3ac94faa203e58fe1f44f,
       type: 2}
 --- !u!114 &362664581
 MonoBehaviour:

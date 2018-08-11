@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,7 +59,8 @@ public class CursorController : MonoBehaviour {
 
 
 
-        UpdatePostion(); 
+        UpdatePostion();
+        UpdateDetail(); 
 	}
 
     private void OnDestroy()
@@ -91,6 +93,20 @@ public class CursorController : MonoBehaviour {
             pre = "PAUSED: "; 
 
         Position.text = pre + tile.x + ", " + tile.y + ", " + tile.z;
+    }
+
+    public void UpdateDetail()
+    {
+        var location = StarSystem.GetSpaceTile(Movement.Location);
+        string detail = "";
+        if (!string.IsNullOrWhiteSpace(location.Name))
+            detail += $"Name: {location.Name}{Environment.NewLine}";
+        if (!string.IsNullOrWhiteSpace(location.Region))
+            detail += $"Region: {location.Region}{Environment.NewLine}";
+        if (location.MineralValue != 0)
+            detail += $"Minerals: {location.MineralValue}{Environment.NewLine}"; 
+
+        Detail.text = detail; 
     }
 
     /// <summary>
