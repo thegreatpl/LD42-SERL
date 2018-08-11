@@ -23,10 +23,10 @@ public class StarSystem : MonoBehaviour {
 
     public Spritemanager Spritemanager;
 
-    public PrefabManager PrefabManager; 
+    public PrefabManager PrefabManager;
 
 
-
+    public GameObject Cursor; 
 
 	// Use this for initialization
 	void Start () {
@@ -91,7 +91,8 @@ public class StarSystem : MonoBehaviour {
     public void StartNewGame()
     {
         GalaxyGenerator.GenerateGalaxy();
-        LoadMainGameScreen(); 
+        LoadMainGameScreen();
+        InitCursor(); 
     }
 
     /// <summary>
@@ -101,14 +102,25 @@ public class StarSystem : MonoBehaviour {
     {
         MainMenuScreen.ClearMenu();
         MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape); 
+        
     }
-
+    /// <summary>
+    /// Initiliazes the cursor. 
+    /// </summary>
+    public void InitCursor()
+    {
+        Cursor = PrefabManager.GetPrefab("Cursor");
+        Instantiate(Cursor, new Vector3(0, 0), Cursor.transform.rotation); 
+        var controller = Cursor.GetComponent<CursorController>();
+        controller.StarSystem = this; 
+    }
 
     /// <summary>
     /// Loads the main menu screen. 
     /// </summary>
     public void LoadMainMenu()
     {
+        Destroy(Cursor); 
         MainMenuScreen.ClearMenu(); 
         MainMenuScreen.AddButton("newgame", "n - Start New Game", StartNewGame, KeyCode.N);
     }

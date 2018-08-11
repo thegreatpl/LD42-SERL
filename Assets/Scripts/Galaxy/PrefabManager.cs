@@ -14,8 +14,12 @@ public class PrefabDef
 
 public class PrefabManager : MonoBehaviour {
 
-    public List<PrefabDef> Prefabs; 
+    public List<PrefabDef> Prefabs;
 
+    void Start()
+    {
+        
+    }
 
     /// <summary>
     /// Gets a prefab from the manage.r 

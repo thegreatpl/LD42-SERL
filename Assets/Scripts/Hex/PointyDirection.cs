@@ -7,12 +7,12 @@ using UnityEngine;
 public enum PointyDirection
     {
         Current = -1,
-        NorthEast = 1,
+        NorthEast = 5,
         East = 0,
-        SouthEast = 5,
-        SouthWest = 4,
+        SouthEast = 1,
+        SouthWest = 2,
         West = 3, 
-        NorthWest = 2
+        NorthWest = 4
     }
 
 
