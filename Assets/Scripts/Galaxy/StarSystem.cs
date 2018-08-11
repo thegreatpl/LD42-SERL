@@ -15,11 +15,17 @@ public class StarSystem : MonoBehaviour {
 
     public Text Position;
 
+    public Text Detail; 
+
     public Camera Camera;
 
     public GalaxyGenerator GalaxyGenerator;
 
-    public Spritemanager Spritemanager; 
+    public Spritemanager Spritemanager;
+
+    public PrefabManager PrefabManager; 
+
+
 
 
 	// Use this for initialization
@@ -27,6 +33,7 @@ public class StarSystem : MonoBehaviour {
         Tilemap = GetComponent<Tilemap>();
         GalaxyGenerator = GetComponent<GalaxyGenerator>();
         Spritemanager = GetComponent<Spritemanager>();
+        PrefabManager = GetComponent<PrefabManager>(); 
 
         LoadMainMenu(); 
 	}
