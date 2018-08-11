@@ -86,9 +86,11 @@ public class CursorController : MonoBehaviour {
         {
             tile = Movement.Location; 
         }
+        string pre = "";
+        if (StarSystem.TimeController.Paused)
+            pre = "PAUSED: "; 
 
-
-        Position.text = tile.x + ", " + tile.y + ", " + tile.z;
+        Position.text = pre + tile.x + ", " + tile.y + ", " + tile.z;
     }
 
     /// <summary>

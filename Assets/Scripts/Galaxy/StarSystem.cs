@@ -25,6 +25,7 @@ public class StarSystem : MonoBehaviour {
 
     public PrefabManager PrefabManager;
 
+    public TimeController TimeController; 
 
     public GameObject Cursor; 
 
@@ -33,7 +34,8 @@ public class StarSystem : MonoBehaviour {
         Tilemap = GetComponent<Tilemap>();
         GalaxyGenerator = GetComponent<GalaxyGenerator>();
         Spritemanager = GetComponent<Spritemanager>();
-        PrefabManager = GetComponent<PrefabManager>(); 
+        PrefabManager = GetComponent<PrefabManager>();
+        TimeController = GetComponent<TimeController>(); 
 
         LoadMainMenu(); 
 	}
@@ -90,9 +92,13 @@ public class StarSystem : MonoBehaviour {
     /// </summary>
     public void StartNewGame()
     {
+        TimeController.Paused = true;
+        TimeController.StartNewGame(); 
         GalaxyGenerator.GenerateGalaxy();
         LoadMainGameScreen();
-        InitCursor(); 
+        InitCursor();
+
+        TimeController.Paused = false; 
     }
 
     /// <summary>
@@ -101,8 +107,10 @@ public class StarSystem : MonoBehaviour {
     public void LoadMainGameScreen()
     {
         MainMenuScreen.ClearMenu();
-        MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape); 
-        
+        MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape);
+        MainMenuScreen.AddButton("pause", "space - Pause", () =>{ TimeController.Paused = !TimeController.Paused; }, KeyCode.Space);
+
+
     }
     /// <summary>
     /// Initiliazes the cursor. 
@@ -110,8 +118,8 @@ public class StarSystem : MonoBehaviour {
     public void InitCursor()
     {
         Cursor = PrefabManager.GetPrefab("Cursor");
-        Instantiate(Cursor, new Vector3(0, 0), Cursor.transform.rotation); 
-        var controller = Cursor.GetComponent<CursorController>();
+        var cur = Instantiate(Cursor, new Vector3(0, 0), Cursor.transform.rotation); 
+        var controller = cur.GetComponent<CursorController>();
         controller.StarSystem = this; 
     }
 
@@ -120,6 +128,7 @@ public class StarSystem : MonoBehaviour {
     /// </summary>
     public void LoadMainMenu()
     {
+        TimeController.EndGame(); 
         Destroy(Cursor); 
         MainMenuScreen.ClearMenu(); 
         MainMenuScreen.AddButton("newgame", "n - Start New Game", StartNewGame, KeyCode.N);
