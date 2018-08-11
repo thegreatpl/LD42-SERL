@@ -115,7 +115,10 @@ public class GalaxyGenerator : MonoBehaviour {
             for (int jdx = 1; jdx < maxRadius; jdx++)
             {
                 var ring = GetRing(c, jdx);
-                var ringAct = ring.Select(x => OffsetCoord.RToUnityCoords(x));
+                var ringAct = ring.Select(x => OffsetCoord.RToUnityCoords(x)).ToList();
+
+
+
                 if (claimed.Intersect(ringAct).Any())
                     break;
                 //keep everything in the galaxy. 
@@ -164,12 +167,12 @@ public class GalaxyGenerator : MonoBehaviour {
     /// <param name="center"></param>
     /// <param name="radius"></param>
     /// <returns></returns>
-     static List<Hex> GetRing(Hex center, int radius)
+    public static List<Hex> GetRing(Hex center, int radius)
     {
         if (radius > 0)
         {
             List<Hex> results = new List<Hex>();
-            Hex hex = Hex.Neighbor( center, (int)PointyDirection.SouthWest, radius);
+            Hex hex = Hex.Neighbor( center, 4, radius);
 
             for (int idx = 0; idx < 6; idx++)
             {

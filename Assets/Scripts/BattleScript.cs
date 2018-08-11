@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleScript : ITickable {
+public class BattleScript : MonoBehaviour, ITickable {
 
     public StarSystem StarSystem; 
 
     public int CoolDown => 0;
 
 
-    public List<Attributes> Entities = new List<Attributes>(); 
+    public List<Attributes> Entities = new List<Attributes>();
 
+    public SpriteRenderer SpriteRenderer; 
 
 
     public void EndTick()
@@ -46,6 +47,8 @@ public class BattleScript : ITickable {
     // Use this for initialization
     void Start () {
         StarSystem.TimeController.TimeObjects.Add(this);
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer.sprite = StarSystem.Spritemanager.GetSprite("battle"); 
 
 	}
 	

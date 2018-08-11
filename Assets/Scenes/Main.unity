@@ -605,9 +605,9 @@ MonoBehaviour:
   Tilemap: {fileID: 0}
   StarSystem: {fileID: 0}
   Spritemanager: {fileID: 0}
-  GalaxyRadius: 100
+  GalaxyRadius: 50
   StarSystemAttempts: 40
-  MinPlanets: 2
+  MinPlanets: 4
   MaxPlanets: 12
   EmptySpace: {fileID: 0}
   Star: []

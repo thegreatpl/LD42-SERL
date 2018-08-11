@@ -16,7 +16,7 @@ struct Point
     public readonly double y;
 }
 
-struct Hex
+public struct Hex
 {
     public Hex(int q, int r, int s)
     {

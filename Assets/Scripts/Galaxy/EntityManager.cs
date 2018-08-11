@@ -7,6 +7,8 @@ public class EntityManager : MonoBehaviour {
 
     StarSystem StarSystem;
 
+    PrefabManager PrefabManager; 
+
     GameObject BattlePrefab; 
 
     public List<Attributes> Entities = new List<Attributes>();
@@ -16,7 +18,8 @@ public class EntityManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         StarSystem = GetComponent<StarSystem>();
-        BattlePrefab = StarSystem.PrefabManager.GetPrefab("Battle"); 
+        PrefabManager = GetComponent<PrefabManager>(); 
+        BattlePrefab = PrefabManager.GetPrefab("Battle"); 
 	}
 	
 	// Update is called once per frame

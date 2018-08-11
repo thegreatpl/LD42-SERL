@@ -13,8 +13,8 @@ public class EntityMovement :Movement
     private void Start()
     {
         Attributes = GetComponent<Attributes>();
-        TickControlScript = GetComponent<TickControlScript>(); 
-
+        TickControlScript = GetComponent<TickControlScript>();
+        Location = Attributes.Location; 
         Move(Location);
     }
 
