@@ -66,6 +66,8 @@ public class Flag : MonoBehaviour {
 
             flashCounter++;
         }
+        else
+            UsualSpriteRenderer.enabled = true; 
 
 	}
 }

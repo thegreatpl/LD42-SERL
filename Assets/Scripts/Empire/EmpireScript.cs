@@ -224,9 +224,9 @@ public class EmpireScript : MonoBehaviour {
             else
                 return Designs.Random().Value; 
         }
-        if (percentage < 0.25f)
+        if (percentage < 0.10f)
             return Designs.Where(x => x.Value.Type == "Colony").Random().Value;
-        if (percentage < 0.75f)
+        if (percentage < 0.80f)
             return Designs.Where(x => x.Value.Type == "Warship").Random().Value;
         return Designs.Random().Value;
 
