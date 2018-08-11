@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Entity.AI;
+﻿using Assets.Scripts.Empire;
+using Assets.Scripts.Entity.AI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,13 @@ public class EntityBrain : MonoBehaviour {
     BaseState CurrentState; 
 
     public string State { get { return CurrentState.Type; } }
+
+    /// <summary>
+    /// The type of ship this is. 
+    /// </summary>
+    public string Type { get { return Attributes.Type; } } 
+
+    public Fleet fleet; 
 
 	// Use this for initialization
 	void Start () {

@@ -105,7 +105,7 @@ public class EmpireManager : MonoBehaviour {
         var corvette = new ShipDesign()
         {
             Name = "Corvette",
-            Type = "Corvette",
+            Type = "Warship",
             Sprite = Spritemanager.GetSprite("corvette"),
             MaxHp = 10,
             BaseComponents = new List<BaseComponent>()

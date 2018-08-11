@@ -41,7 +41,14 @@ public class EmpireScript : MonoBehaviour {
     /// <summary>
     /// The colonies of this empire. 
     /// </summary>
-    public List<ColonyControl> Colonies = new List<ColonyControl>(); 
+    public List<ColonyControl> Colonies = new List<ColonyControl>();
+
+    List<Fleet> fleets = new List<Fleet>();
+
+    int guardfleetno;
+
+    int raidingFleetsize; 
+
 
     Coroutine Ai; 
 
@@ -80,8 +87,25 @@ public class EmpireScript : MonoBehaviour {
     {
         yield return null;
 
+        guardfleetno = Random.Range(1, 5);
+        raidingFleetsize = Random.Range(5, 20); 
 
         var design = Designs.Random().Value;
+
+
+        foreach (var col in Colonies)
+        {
+            fleets.Add(new Fleet()
+            {
+                Location = col.Location, Tag = "guard", action = "guard"
+            });
+        }
+        fleets.Add(new Fleet()
+        {
+            Location = Colonies[0].Location, Tag = "raiding", action = "dock"
+        });
+        fleets.ForEach(x => x.HomeBase = x.Location);
+        yield return true; 
 
         while (true)
         {
@@ -91,8 +115,8 @@ public class EmpireScript : MonoBehaviour {
 
                 if (col != null)
                 {
-                    col.BuildShip(design); 
-                    design = Designs.Random().Value;
+                    col.BuildShip(design);
+                    design = PickDesign(); 
                 }
                 
             }
@@ -118,10 +142,64 @@ public class EmpireScript : MonoBehaviour {
             }
             
 
+            yield return null;
+
+            var unassigned = Ships.Where(x => x.fleet == null && x.Type == "Warship");
+            foreach (var un in unassigned)
+            {
+                var underFleet = fleets.FirstOrDefault(x => x.Ships.Count < guardfleetno && x.Tag == "guard");
+                if (underFleet == null)
+                {
+                    var raid = fleets.FirstOrDefault(x => x.Ships.Count < raidingFleetsize && tag == "raiding");
+                    if (raid == null)
+                    {
+                        var nef = new Fleet() { Location = Colonies.Random().Location, Tag = "raiding", action = "dock"  };
+                        nef.HomeBase = nef.Location; 
+                        nef.AddShip(un);
+                        un.SetState(new MoveState(un, nef.Location)); 
+                        fleets.Add(nef);
+                    }
+                }
+                else
+                {
+                    underFleet.AddShip(un);
+                    un.SetState(new MoveState(un, underFleet.Location)); 
+                }
+            }
+
+            yield return null;
+
+            var raiders = fleets.FirstOrDefault(x => x.Ships.Count == guardfleetno / 2 && x.action == "dock"); 
+            if (raiders != null)
+            {
+                var colonies = EntityManager.Entities.OfType<ColonyAttributes>()
+                    .Where(x => x.Empire.Hostile(Id))
+                    .OrderBy(x => OffsetCoord.RFromUnity(x.Location).Distance(OffsetCoord.RFromUnity(raiders.Location)));
+                var target = colonies.ElementAtOrDefault(Random.Range(0, 5)); 
+                if (target != null)
+                {
+                    raiders.SummonFleet(target.Location);
+                    raiders.action = "raid"; 
+                }
+
+            }
             yield return null; 
 
-
-
+            foreach(var colony in Colonies)
+            {
+                var guards = fleets.FirstOrDefault(x => x.HomeBase == colony.Location && x.Tag == "guard"); 
+                if (guards == null)
+                {
+                    fleets.Add(new Fleet()
+                    {
+                        Location = colony.Location,
+                        HomeBase = colony.Location,
+                        action = "guard",
+                        Tag = "guard"
+                    }); 
+                }
+            }
+            yield return null;
 
             //yield return new WaitForSeconds(60);
             //var finished = Ships.Where(x => x.State == "Guard"); 
@@ -129,6 +207,29 @@ public class EmpireScript : MonoBehaviour {
             //    f.MoveTo(StarSystem.GalaxyGenerator.Planets.Random());
 
         }
+    }
+
+    /// <summary>
+    /// Picks a design. todo; make it less random. 
+    /// </summary>
+    /// <returns></returns>
+    ShipDesign PickDesign()
+    {
+        var percentage = Random.Range(0, 1); 
+
+        if (Colonies.Count < 3)
+        {
+            if (percentage < 0.75f)
+                return Designs.Where(x => x.Value.Type == "Colony").Random().Value;
+            else
+                return Designs.Random().Value; 
+        }
+        if (percentage < 0.25f)
+            return Designs.Where(x => x.Value.Type == "Colony").Random().Value;
+        if (percentage < 0.75f)
+            return Designs.Where(x => x.Value.Type == "Warship").Random().Value;
+        return Designs.Random().Value;
+
     }
 
     public void CreateEntity(Vector3Int location, ShipDesign design)

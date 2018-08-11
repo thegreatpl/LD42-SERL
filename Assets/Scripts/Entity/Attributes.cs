@@ -14,7 +14,7 @@ public enum DamageType
 
 public class Attributes : BaseAttributes {
 
-
+    public string Type; 
 
     /// <summary>
     /// How heavy this is. 
@@ -76,6 +76,8 @@ public class Attributes : BaseAttributes {
     /// <param name="components"></param>
     public void Initialize(ShipDesign shipDesign)
     {
+        Type = shipDesign.Type;
+
         GetComponent<SpriteRenderer>().sprite = shipDesign.Sprite; 
 
         var components = shipDesign.BaseComponents; 
