@@ -10,6 +10,8 @@ public delegate void OnClick();
 
 public class ButtonControl : MonoBehaviour {
 
+    public MenuController MenuController; 
+
     /// <summary>
     /// The attached button. 
     /// </summary>
@@ -32,7 +34,7 @@ public class ButtonControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Key.HasValue && Input.GetKeyDown(Key.Value))
+		if (MenuController.Active && Key.HasValue && Input.GetKeyDown(Key.Value))
         {
             OnClick?.Invoke(); 
         }

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuController : MonoBehaviour {
+    
+    /// <summary>
+    /// Whether this menu is active or not. 
+    /// </summary>
+    public bool Active = true; 
 
     /// <summary>
     /// The button gameobject. 
@@ -45,7 +50,8 @@ public class MenuController : MonoBehaviour {
         button.name = name; 
         var control = button.GetComponent<ButtonControl>();
         control.SetValues(text, onClick, key);
-        buttons.Add(name, button); 
+        buttons.Add(name, button);
+        control.MenuController = this; 
     }
 
     /// <summary>
