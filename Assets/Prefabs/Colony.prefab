@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4555554940412120}
   - component: {fileID: 212505170448332032}
   - component: {fileID: 114155026991129354}
+  - component: {fileID: 114716258036416900}
   m_Layer: 0
   m_Name: Colony
   m_TagString: Untagged
@@ -52,6 +53,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1a80038ff2cbc459522bcef8652101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Empire: {fileID: 0}
+  StarSystem: {fileID: 0}
+  Location: {x: 0, y: 0, z: 0}
+  Colony: {fileID: 0}
+  Buildrate: 1.2
+  coolDown: 0
+  mining: 1
+  building: 0
+--- !u!114 &114716258036416900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1779749452793454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f6cbb0fe5092c44a23c9e43f9106ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Battle: {fileID: 0}
+  Empire: {fileID: 0}
+  StarSystem: {fileID: 0}
+  Location: {x: 0, y: 0, z: 0}
+  MaxHP: 0
+  MaxArmor: 0
+  MaxShields: 0
+  HP: 0
+  Armor: 0
+  Shields: 0
+  VisionRange: 0
 --- !u!212 &212505170448332032
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -86,7 +117,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

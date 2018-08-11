@@ -91,5 +91,15 @@ public class Spritemanager : MonoBehaviour {
         return NullSprite; 
     }
 
+    /// <summary>
+    /// Whether or not this contains the requested sprite. 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public bool HasSprite(string name)
+    {
+        return Sprites.ContainsKey(name); 
+    }
+
 
 }

@@ -52,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265624b4d902f4d4fa5b58d1e1a33d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StarSystem: {fileID: 0}
+  Entities: []
+  SpriteRenderer: {fileID: 0}
 --- !u!212 &212337513501252794
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -86,7 +89,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

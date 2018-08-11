@@ -11,6 +11,7 @@ public class EmpireScript : MonoBehaviour {
 
     public int Id;
 
+    public Sprite EmpireBanner; 
 
     public int Resouces = 0;
 
@@ -27,6 +28,9 @@ public class EmpireScript : MonoBehaviour {
     /// </summary>
     public static GameObject Entity;
 
+    /// <summary>
+    /// The colony prefab. 
+    /// </summary>
     public static GameObject Colony; 
 
 

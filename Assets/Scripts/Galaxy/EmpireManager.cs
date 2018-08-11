@@ -17,15 +17,17 @@ public class EmpireManager : MonoBehaviour {
 
     public Dictionary<string, ShipDesign> BasicDesigns = new Dictionary<string, ShipDesign>();
 
-    public List<BaseComponent> components = new List<BaseComponent>(); 
+    public List<BaseComponent> components = new List<BaseComponent>();
+
+
+    public List<Sprite> EmpireSprites = new List<Sprite>(); 
 
 	// Use this for initialization
 	void Start () {
         StarSystem = GetComponent<StarSystem>();
         EntityManager = GetComponent<EntityManager>();
         Spritemanager = GetComponent<Spritemanager>();
-        LoadComponents(); 
-        LoadBasicDesigns(); 
+        NewGame(); 
 	}
 	
 	// Update is called once per frame
@@ -47,7 +49,12 @@ public class EmpireManager : MonoBehaviour {
         var uncolonized = EntityManager.GetAllUncolonized();
         if (uncolonized.Count < 1)
             return;
-
+        if (EmpireSprites.Count > 1)
+        {
+            var banner = EmpireSprites.Random();
+            EmpireSprites.Remove(banner);
+            script.EmpireBanner = banner;
+        }
         script.EntityManager = EntityManager;
         script.Designs = BasicDesigns;
         script.StarSystem = StarSystem;
@@ -116,18 +123,34 @@ public class EmpireManager : MonoBehaviour {
             MaxHp = 10,
             BaseComponents = new List<BaseComponent>()
             {
-                GetComponentType("engine"), GetComponentType("colony")
+                GetComponentType("engine"),GetComponentType("engine"),GetComponentType("engine"), GetComponentType("colony")
             }
         };
         colony.Cost = colony.BaseComponents.Sum(x => x.Cost); 
         BasicDesigns.Add(colony.Name, colony);
     }
 
+    public void LoadEmpireBanners()
+    {
+        EmpireSprites = new List<Sprite>(); 
+        int idx = 1; 
+        string name = $"empire{idx}"; 
+        while(Spritemanager.HasSprite(name))
+        {
+            EmpireSprites.Add(Spritemanager.GetSprite(name)); 
+            idx++;
+            name = $"empire{idx}";
+        }
+    }
 
     public void NewGame()
     {
         Empires.ForEach(x => Destroy(x.gameObject));
-        Empires.Clear(); 
+        Empires.Clear();
+        LoadEmpireBanners(); 
+        LoadComponents();
+        LoadBasicDesigns();
+        
     }
 
 }
