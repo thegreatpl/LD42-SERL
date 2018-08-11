@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de7fb00db81cf34abb6f8aa7b3c2c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MenuController: {fileID: 0}
   Button: {fileID: 114865933109213896}
   Text: {fileID: 114301260993967406}
 --- !u!114 &114589614664851562

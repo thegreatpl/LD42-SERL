@@ -31,7 +31,9 @@ public class StarSystem : MonoBehaviour {
 
     public EntityManager EntityManager;
 
-    public EmpireManager EmpireManager; 
+    public EmpireManager EmpireManager;
+
+    public MenuManager MenuManager; 
 
     public GameObject Cursor; 
 
@@ -47,8 +49,9 @@ public class StarSystem : MonoBehaviour {
         TimeController = GetComponent<TimeController>();
         EntityManager = GetComponent<EntityManager>();
         EmpireManager = GetComponent<EmpireManager>();
+        MenuManager = GetComponent<MenuManager>(); 
         Flag.EmptyPrefab = new GameObject(); 
-        LoadMainMenu(); 
+        MenuManager.LoadMainMenu(); 
 	}
 	
 	// Update is called once per frame
@@ -112,7 +115,7 @@ public class StarSystem : MonoBehaviour {
         TimeController.StartNewGame();
         EmpireManager.NewGame(); 
         GalaxyGenerator.GenerateGalaxy();
-        LoadMainGameScreen();
+        MenuManager.LoadMainGameScreen();
         InitCursor();
         for(int idx = 0; idx < EmpireNo; idx++)
         {
@@ -123,17 +126,7 @@ public class StarSystem : MonoBehaviour {
         TimeController.Paused = false; 
     }
 
-    /// <summary>
-    /// Loads the in game screen. 
-    /// </summary>
-    public void LoadMainGameScreen()
-    {
-        MainMenuScreen.ClearMenu();
-        MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape);
-        MainMenuScreen.AddButton("pause", "space - Pause", () =>{ TimeController.Paused = !TimeController.Paused; }, KeyCode.Space);
-
-
-    }
+   
     /// <summary>
     /// Initiliazes the cursor. 
     /// </summary>
@@ -145,14 +138,5 @@ public class StarSystem : MonoBehaviour {
         controller.StarSystem = this; 
     }
 
-    /// <summary>
-    /// Loads the main menu screen. 
-    /// </summary>
-    public void LoadMainMenu()
-    {
-        TimeController.EndGame(); 
-        Destroy(Cursor); 
-        MainMenuScreen.ClearMenu(); 
-        MainMenuScreen.AddButton("newgame", "n - Start New Game", StartNewGame, KeyCode.N);
-    }
+   
 }
