@@ -194,8 +194,9 @@ public class MenuManager: MonoBehaviour {
     {
         var pageo = Instantiate(menuObj, Canvas.transform);
         var menu= pageo.GetComponentInChildren<MenuController>();
-        Cursor.SetMovement(true, menu);
         menu.AddText("selectobj", attributes.name); 
+
+        Cursor.SetMovement(true, menu);
         menu.AddButton("deselect", "Backspace - Back", () => { CloseMenu("select"); }, KeyCode.Backspace);
         menu.AddButton("goto", "G - Goto", () => { Cursor.SetPosition(attributes.Location); }, KeyCode.G); 
         var colony = attributes as ColonyAttributes; 

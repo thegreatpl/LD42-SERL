@@ -742,7 +742,7 @@ MonoBehaviour:
     GameObject: {fileID: 1228536562106264, guid: f108637a92fec6f4889b1ac7e9532a5e,
       type: 2}
   - Name: Text
-    GameObject: {fileID: 1870216393562682, guid: 42b44a4661af50b4bbf5206dd9d62994,
+    GameObject: {fileID: 1258700610135432, guid: bf6bfd8958aca634bb19f48036700267,
       type: 2}
 --- !u!114 &362664581
 MonoBehaviour:
