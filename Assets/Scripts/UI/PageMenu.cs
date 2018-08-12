@@ -36,7 +36,7 @@ public class PageMenu : MenuController
             currentPage.Add(def); 
         }
 
-        PopulatePage(1); 
+        PopulatePage(0); 
     }
 
     /// <summary>

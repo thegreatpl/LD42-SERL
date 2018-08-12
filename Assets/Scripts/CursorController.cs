@@ -128,7 +128,7 @@ public class CursorController : MonoBehaviour {
             detail += $"Minerals: {location.MineralValue}{Environment.NewLine}";
 
 
-        var ent = StarSystem.EntityManager.Entities.Where(x => x.Location == Movement.Location); 
+        var ent = StarSystem.EntityManager.GetEntitiesAt(Movement.Location); 
         foreach(var e in ent)
         {
             detail += $"{e.Empire.Name}:{e.Type}{Environment.NewLine}"; 

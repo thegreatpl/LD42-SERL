@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224769975103259932}
   - component: {fileID: 222365657652193448}
   - component: {fileID: 114227396642968712}
+  - component: {fileID: 114861941768204438}
   m_Layer: 5
   m_Name: PopupMenu
   m_TagString: Untagged
@@ -107,6 +108,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   ButtonObj: {fileID: 1192052881697734, guid: 42b44a4661af50b4bbf5206dd9d62994, type: 2}
+  TextObj: {fileID: 1870216393562682, guid: 42b44a4661af50b4bbf5206dd9d62994, type: 2}
+--- !u!114 &114861941768204438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1541041698578040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 1
 --- !u!222 &222365657652193448
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -148,6 +172,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -287.86, y: 0}
-  m_SizeDelta: {x: 174.59998, y: 270}
+  m_AnchoredPosition: {x: -175, y: 0}
+  m_SizeDelta: {x: 175, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}

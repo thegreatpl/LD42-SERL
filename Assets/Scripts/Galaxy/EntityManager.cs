@@ -68,4 +68,9 @@ public class EntityManager : MonoBehaviour {
         planets.RemoveAll(x => colonies.Contains(x));
         return planets; 
     }
+
+    public IEnumerable<BaseAttributes> GetEntitiesAt(Vector3Int loc)
+    {
+        return Entities.Where(x => x.Location == loc); 
+    }
 }
