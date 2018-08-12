@@ -686,8 +686,6 @@ MonoBehaviour:
   StarSystemAttempts: 40
   MinPlanets: 4
   MaxPlanets: 12
-  Planets: []
-  Stars: []
   NameOptions: []
   EmptySpace: {fileID: 0}
   Star: []
@@ -799,8 +797,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainMenuScreen: {fileID: 120043146}
-  TimeController: {fileID: 0}
-  StarSystem: {fileID: 0}
+  TimeController: {fileID: 362664581}
+  StarSystem: {fileID: 362664577}
   Canvas: {fileID: 129941192}
   Cursor: {fileID: 0}
 --- !u!1 &389344178

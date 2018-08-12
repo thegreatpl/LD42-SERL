@@ -243,6 +243,7 @@ public class EmpireScript : MonoBehaviour {
         var loc = StarSystem.TileToWorld(location);
         var obj =Instantiate(Entity,loc , Entity.transform.rotation);
         var atr = obj.GetComponent<Attributes>();
+        atr.Id = BaseAttributes.GetId();
         atr.StarSystem = StarSystem;
         atr.Empire = this;
         atr.Location = location; 
@@ -270,6 +271,7 @@ public class EmpireScript : MonoBehaviour {
         var loc = StarSystem.TileToWorld(location);
         var obj = Instantiate(Colony, loc, Colony.transform.rotation);
         var atr = obj.GetComponent<ColonyAttributes>();
+        atr.Id = BaseAttributes.GetId();
         atr.StarSystem = StarSystem;
         atr.Empire = this;
         atr.Location = location;

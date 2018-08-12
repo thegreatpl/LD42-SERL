@@ -52,7 +52,8 @@ public class StarSystem : MonoBehaviour {
         EntityManager = GetComponent<EntityManager>();
         EmpireManager = GetComponent<EmpireManager>();
         MenuManager = GetComponent<MenuManager>(); 
-        Flag.EmptyPrefab = new GameObject(); 
+        Flag.EmptyPrefab = new GameObject();
+ 
         MenuManager.LoadMainMenu(); 
 	}
 	

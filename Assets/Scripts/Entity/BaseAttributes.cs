@@ -8,11 +8,15 @@ using UnityEngine;
 
 public class BaseAttributes : MonoBehaviour
 {
-    private static ulong _id = 0; 
-    public static ulong GetId { get { return _id++; } }
+    private static ulong _id; 
+    public static ulong GetId() {
+       // if (_id == null) _id = 0;
+        _id++;
+        return _id; }
 
 
-    public ulong Id = GetId; 
+    public ulong Id; 
+
     /// <summary>
     /// The type of this entity. 
     /// </summary>
