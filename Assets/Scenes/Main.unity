@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   ButtonObj: {fileID: 1192052881697734, guid: 42b44a4661af50b4bbf5206dd9d62994, type: 2}
+  TextObj: {fileID: 0}
 --- !u!114 &120043147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,6 +742,9 @@ MonoBehaviour:
       type: 2}
   - Name: PageMenu
     GameObject: {fileID: 1228536562106264, guid: f108637a92fec6f4889b1ac7e9532a5e,
+      type: 2}
+  - Name: Text
+    GameObject: {fileID: 1870216393562682, guid: 42b44a4661af50b4bbf5206dd9d62994,
       type: 2}
 --- !u!114 &362664581
 MonoBehaviour:

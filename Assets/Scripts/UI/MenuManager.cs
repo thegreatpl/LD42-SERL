@@ -28,8 +28,11 @@ public class MenuManager: MonoBehaviour {
         StarSystem = GetComponent<StarSystem>(); 
         menuObj = GetComponent<PrefabManager>().GetPrefab("Menu");
         menuObj.GetComponentInChildren<MenuController>().ButtonObj = GetComponent<PrefabManager>().GetPrefab("Button");
+        menuObj.GetComponentInChildren<MenuController>().TextObj = GetComponent<PrefabManager>().GetPrefab("Text");
+
         PageMenuObj = GetComponent<PrefabManager>().GetPrefab("PageMenu");
         PageMenuObj.GetComponentInChildren<PageMenu>().ButtonObj = GetComponent<PrefabManager>().GetPrefab("Button");
+        PageMenuObj.GetComponentInChildren<MenuController>().TextObj = GetComponent<PrefabManager>().GetPrefab("Text");
 
         TimeController = GetComponent<TimeController>();
         //Cursor = StarSystem.Cursor.GetComponent<CursorController>(); 

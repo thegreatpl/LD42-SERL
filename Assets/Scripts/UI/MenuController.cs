@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
     
@@ -13,6 +14,11 @@ public class MenuController : MonoBehaviour {
     /// The button gameobject. 
     /// </summary>
     public GameObject ButtonObj;
+
+    /// <summary>
+    /// A text object. 
+    /// </summary>
+    public GameObject TextObj; 
 
     Dictionary<string, GameObject> buttons = new Dictionary<string, GameObject>(); 
 
@@ -67,5 +73,21 @@ public class MenuController : MonoBehaviour {
             buttons.Remove(name);
 
         }
+    }
+
+    /// <summary>
+    /// Adds a text reading to this object. 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="text"></param>
+    public virtual void AddText(string name, string text)
+    {
+        var tex = Instantiate(TextObj, transform);
+        tex.name = name; 
+        var texto = tex.GetComponent<Text>();
+        texto.text = text; 
+
+        buttons.Add(name, tex);
+
     }
 }
