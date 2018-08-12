@@ -64,7 +64,9 @@ public class MenuManager: MonoBehaviour {
         MainMenuScreen.AddButton("newgame", "n - Start New Game", StarSystem.StartNewGame, KeyCode.N);
     }
 
-
+    /// <summary>
+    /// Loads the goto menu. 
+    /// </summary>
     public void LoadGotoMenu()
     {
         MainMenuScreen.Active = false;
@@ -97,5 +99,27 @@ public class MenuManager: MonoBehaviour {
         }
 
         MainMenuScreen.Active = true; 
+    }
+
+
+    public void LoadBuildMenu()
+    {
+        MainMenuScreen.Active = false;
+        List<ButtonDef> buttonDefs = new List<ButtonDef>();
+
+        var pageo = Instantiate(PageMenuObj, Canvas.transform);
+        var page = pageo.GetComponentInChildren<PageMenu>();
+    }
+
+
+    public void CloseBuildMenu()
+    {
+        if (Menus.ContainsKey("goto"))
+        {
+            Destroy(Menus["goto"].transform.parent.gameObject);
+            Menus.Remove("goto");
+        }
+
+        MainMenuScreen.Active = true;
     }
 }

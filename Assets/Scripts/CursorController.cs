@@ -17,6 +17,8 @@ public class CursorController : MonoBehaviour {
 
     public Text Detail;
 
+    public Text Resource; 
+
     public Movement Movement;
 
     public bool MouseMode = true;
@@ -26,6 +28,8 @@ public class CursorController : MonoBehaviour {
     SpriteRenderer Sprite;
 
     int flashCount = 0;
+
+
 
     /// <summary>
     /// The player empire. 
@@ -39,7 +43,8 @@ public class CursorController : MonoBehaviour {
         Movement.Location = StarSystem.WorldToTile(transform.position); 
         Position = StarSystem.Position;
         Detail = StarSystem.Detail;
-        Camera = StarSystem.Camera; 
+        Camera = StarSystem.Camera;
+        Resource = StarSystem.Resource; 
 
         Sprite = GetComponent<SpriteRenderer>();
         Sprite.sprite = StarSystem.Spritemanager.GetSprite("cursor");
@@ -66,7 +71,8 @@ public class CursorController : MonoBehaviour {
 
 
         UpdatePostion();
-        UpdateDetail(); 
+        UpdateDetail();
+        UpdateResource(); 
 	}
 
     private void OnDestroy()
@@ -74,6 +80,15 @@ public class CursorController : MonoBehaviour {
         SetMovement(false, StarSystem.MainMenuScreen); 
         Detail.text = "";
         Position.text = ""; 
+    }
+
+    public void UpdateResource()
+    {
+        if (PlayerEmpire != null)
+        {
+            Resource.text = $"${PlayerEmpire.Resouces}";
+
+        }
     }
 
     /// <summary>

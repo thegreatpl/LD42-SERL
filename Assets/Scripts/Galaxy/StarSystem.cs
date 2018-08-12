@@ -17,7 +17,9 @@ public class StarSystem : MonoBehaviour {
 
     public Text Position;
 
-    public Text Detail; 
+    public Text Detail;
+
+    public Text Resource; 
 
     public Camera Camera;
 
