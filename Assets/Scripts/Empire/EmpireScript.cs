@@ -255,7 +255,7 @@ public class EmpireScript : MonoBehaviour {
 
         EntityManager.Entities.Add(atr);
         Ships.Add(br);
-        obj.name = $"{design.Name}:{Id}"; 
+        obj.name = $"{Id}:{design.Name}:{atr.Id}"; 
 
         atr.Initialize(design);
 
@@ -281,7 +281,7 @@ public class EmpireScript : MonoBehaviour {
         EntityManager.Entities.Add(atr);
         Colonies.Add(c);
 
-        obj.name = $"ColonyPlanet:{Id}"; 
+        obj.name = $"{Id}:ColonyPlanet:{atr.Id}"; 
 
         if (source != null)
             Destroy(source); 

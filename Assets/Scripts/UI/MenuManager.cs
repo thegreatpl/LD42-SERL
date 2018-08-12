@@ -64,7 +64,10 @@ public class MenuManager: MonoBehaviour {
         MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape);
         MainMenuScreen.AddButton("pause", "space - Pause", () => { TimeController.Paused = !TimeController.Paused; }, KeyCode.Space);
         MainMenuScreen.AddButton("goto", "G - Goto", () => { LoadGotoMenu(); }, KeyCode.G);
-        MainMenuScreen.AddButton("select", "S - Select", LoadSelectObjectPageMenu, KeyCode.S); 
+        MainMenuScreen.AddButton("select", "S - Select", LoadSelectObjectPageMenu, KeyCode.S);
+        MainMenuScreen.AddButton("colonies", "H - Colonies", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Colonies.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.H);
+        MainMenuScreen.AddButton("ships", "J - Ships", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Ships.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.J);
+
         MainMenuScreen.AddButton("flag", "P - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.P);
         Cursor.SetMovement(true, MainMenuScreen); 
     }
@@ -132,6 +135,11 @@ public class MenuManager: MonoBehaviour {
         var location = Cursor.Movement.Location;
 
         var entities = StarSystem.EntityManager.GetEntitiesAt(location);
+        LoadSelectObjectPageMenu(entities); 
+    }
+
+    public void LoadSelectObjectPageMenu(IEnumerable<BaseAttributes> entities)
+    { 
 
         if (entities.Count() == 0)
             return;
@@ -147,7 +155,7 @@ public class MenuManager: MonoBehaviour {
         {
             buttonDefs.Add(new ButtonDef()
             {
-                name = $"select{ent.name}",
+                name = $"select{ent.Id}",
                 OnClick = () => { LoadSelectedMenu(ent); CloseMenu("selectpage"); },
                 text = $"{ent.Type}:{ent.Location.ToString()}"
             });
@@ -186,6 +194,7 @@ public class MenuManager: MonoBehaviour {
         var pageo = Instantiate(menuObj, Canvas.transform);
         var menu= pageo.GetComponentInChildren<MenuController>();
         Cursor.SetMovement(true, menu);
+        menu.AddText("selectobj", attributes.name); 
         menu.AddButton("deselect", "Backspace - Back", () => { CloseMenu("select"); }, KeyCode.Backspace);
         menu.AddButton("goto", "G - Goto", () => { Cursor.SetPosition(attributes.Location); }, KeyCode.G); 
         var colony = attributes as ColonyAttributes; 
@@ -266,11 +275,13 @@ public class MenuManager: MonoBehaviour {
                 name = $"design{design.Key}",
                 OnClick = () =>
                 {
-                    CloseMenu("build");
                     if (colonyControl.building == false)
                     {
                         if (colonyControl.Empire.Resouces > design.Value.Cost)
+                        {
                             colonyControl.BuildShip(design.Value);
+                            CloseMenu("build");
+                        }
                     }
                 }, text = $"{design.Key}: {design.Value.Type}{Environment.NewLine}"
                 + $"{design.Value.Cost} L:{weapons.Where(x => x.DamageType == DamageType.Energy).Sum(x => x.Amount)} M:{weapons.Where(x => x.DamageType == DamageType.Mass).Sum(x => x.Amount)} O:{weapons.Where(x => x.DamageType == DamageType.Mass).Sum(x => x.Amount)}", 
@@ -283,4 +294,7 @@ public class MenuManager: MonoBehaviour {
         Menus.Add("build", page); 
 
     }
+
+
+   
 }
