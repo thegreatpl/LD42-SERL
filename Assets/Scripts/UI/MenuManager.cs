@@ -70,7 +70,7 @@ public class MenuManager: MonoBehaviour {
         MainMenuScreen.AddButton("select", "S - Select", LoadSelectObjectPageMenu, KeyCode.S);
         MainMenuScreen.AddButton("colonies", "H - Colonies", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Colonies.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.H);
         MainMenuScreen.AddButton("ships", "J - Ships", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Ships.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.J);
-        MainMenuScreen.AddButton("ping", "P - Goto Last Message", () => { Cursor.Movement.Move(Logger.PingLocation); }, KeyCode.P); 
+        MainMenuScreen.AddButton("ping", "P - Goto Last Message", () => { Cursor.SetPosition(Logger.PingLocation); }, KeyCode.P); 
 
         MainMenuScreen.AddButton("flag", "I - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.I);
         Cursor.SetMovement(true, MainMenuScreen); 

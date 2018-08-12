@@ -59,12 +59,13 @@ public class MenuController : MonoBehaviour {
             button.name = name;
             var control = button.GetComponent<ButtonControl>();
             control.SetValues(text, onClick, key);
-            buttons.Add(name, button);
             control.MenuController = this;
+
+            buttons.Add(name, button);
         }
         catch (Exception e)
         {
-            Debug.Log($"Error adding Button to menu:{e.Message}"); 
+            Debug.LogError($"Error adding Button to menu:{e.Message}"); 
         }
     }
 

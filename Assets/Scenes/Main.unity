@@ -2171,6 +2171,7 @@ MonoBehaviour:
   TextObj: {fileID: 0}
   PingLocation: {x: 0, y: 0, z: 0}
   PrefabManager: {fileID: 362664580}
+  Spritemanager: {fileID: 362664579}
   MaxObjects: 20
 --- !u!114 &2071794105
 MonoBehaviour:

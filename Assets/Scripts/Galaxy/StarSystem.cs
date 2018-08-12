@@ -116,6 +116,7 @@ public class StarSystem : MonoBehaviour {
     /// </summary>
     public void StartNewGame()
     {
+        Debug.Log("New game begun"); 
         TimeController.Paused = true;
         TimeController.StartNewGame();
         EmpireManager.NewGame(); 
