@@ -49,7 +49,8 @@ public class MenuManager: MonoBehaviour {
         MainMenuScreen.AddButton("mainmenu", "esc - Main Menu", LoadMainMenu, KeyCode.Escape);
         MainMenuScreen.AddButton("pause", "space - Pause", () => { TimeController.Paused = !TimeController.Paused; }, KeyCode.Space);
         MainMenuScreen.AddButton("goto", "G - Goto", () => { LoadGotoMenu(); }, KeyCode.G);
-        MainMenuScreen.AddButton("flag", "P - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.P); 
+        MainMenuScreen.AddButton("flag", "P - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.P);
+        Cursor.SetMovement(true, MainMenuScreen); 
     }
 
     /// <summary>

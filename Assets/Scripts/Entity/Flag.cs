@@ -42,6 +42,7 @@ public class Flag : MonoBehaviour {
         {
             EmpireSpriteRenders.sortingOrder = UsualSpriteRenderer.sortingOrder - 1; 
             EmpireSpriteRenders.sprite = EmpireTexture;
+           
             EmpireSpriteRenders.enabled = true;
         }
         else
@@ -67,7 +68,11 @@ public class Flag : MonoBehaviour {
             flashCounter++;
         }
         else
-            UsualSpriteRenderer.enabled = true; 
+            UsualSpriteRenderer.enabled = true;
+
+
+        UsualSpriteRenderer.color = BaseAttributes.Empire.EmpireColor;
+        EmpireSpriteRenders.color = BaseAttributes.Empire.EmpireColor; 
 
 	}
 }

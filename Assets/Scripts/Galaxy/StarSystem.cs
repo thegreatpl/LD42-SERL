@@ -115,27 +115,50 @@ public class StarSystem : MonoBehaviour {
         TimeController.StartNewGame();
         EmpireManager.NewGame(); 
         GalaxyGenerator.GenerateGalaxy();
-        MenuManager.LoadMainGameScreen();
-        InitCursor();
+
+        //start player empire. 
+        StartPlayerEmpire(); 
         for(int idx = 0; idx < EmpireNo; idx++)
         {
-            EmpireManager.CreateNewEmpire(); 
+            var emp = EmpireManager.CreateNewEmpire();
+            if (emp == null)
+                continue; 
+            emp.StartAi(); 
         }
         
+        MenuManager.LoadMainGameScreen();
 
         TimeController.Paused = false; 
+    }
+
+    void StartPlayerEmpire()
+    {
+
+        var player = EmpireManager.CreateNewEmpire();
+        player.EmpireColor = Spritemanager.Colors["LGREEN"]; 
+
+        InitCursor(TileToWorld(player.Colonies[0].Location));
+
+        MenuManager.Cursor.PlayerEmpire = player;
+ 
+        var curmov = Cursor.GetComponent<Movement>();
+        curmov.StarSystem = this;
+        curmov.Move(player.Colonies[0].Location);
+        MenuManager.Cursor.Movement = curmov; 
+        MenuManager.Cursor.SetCamPos(); 
     }
 
    
     /// <summary>
     /// Initiliazes the cursor. 
     /// </summary>
-    public void InitCursor()
+    public void InitCursor(Vector3 location)
     {
         Cursor = PrefabManager.GetPrefab("Cursor");
-        var cur = Instantiate(Cursor, new Vector3(0, 0), Cursor.transform.rotation); 
+        var cur = Instantiate(Cursor, location, Cursor.transform.rotation); 
         var controller = cur.GetComponent<CursorController>();
         controller.StarSystem = this;
+        controller.Camera = Camera; 
         MenuManager.Cursor = controller; 
     }
 

@@ -35,7 +35,7 @@ public class EmpireManager : MonoBehaviour {
 		
 	}
 
-    public void CreateNewEmpire()
+    public EmpireScript CreateNewEmpire()
     {
         if (EmpireScript.Entity == null)
             EmpireScript.Entity = StarSystem.PrefabManager.GetPrefab("Entity");
@@ -48,7 +48,7 @@ public class EmpireManager : MonoBehaviour {
 
         var uncolonized = EntityManager.GetAllUncolonized();
         if (uncolonized.Count < 1)
-            return;
+            return null;
         if (EmpireSprites.Count > 1)
         {
             var banner = EmpireSprites.Random();
@@ -60,9 +60,12 @@ public class EmpireManager : MonoBehaviour {
         script.StarSystem = StarSystem;
         script.Resouces = 100; 
 
-        script.CreateColony(uncolonized.Random()); 
-        
-        script.StartAi(); 
+        script.CreateColony(uncolonized.Random());
+
+        script.EmpireColor = Spritemanager.Colors["RED"]; 
+        //script.StartAi(); 
+
+        return script; 
     }
 
     public BaseComponent GetComponentType(string type)

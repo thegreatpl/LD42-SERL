@@ -16,7 +16,7 @@ public class CursorController : MonoBehaviour {
 
     public Text Detail;
 
-    Movement Movement;
+    public Movement Movement;
 
     public bool MouseMode = true;
 
@@ -24,7 +24,12 @@ public class CursorController : MonoBehaviour {
 
     SpriteRenderer Sprite;
 
-    int flashCount = 0; 
+    int flashCount = 0;
+
+    /// <summary>
+    /// The player empire. 
+    /// </summary>
+    public EmpireScript PlayerEmpire; 
 
 	// Use this for initialization
 	void Start () {
@@ -41,7 +46,7 @@ public class CursorController : MonoBehaviour {
 
         SetCamPos(); 
 
-        SetMovement(true); 
+       // SetMovement(true, StarSystem.MainMenuScreen); 
 
 
     }
@@ -65,7 +70,7 @@ public class CursorController : MonoBehaviour {
 
     private void OnDestroy()
     {
-        SetMovement(false); 
+        SetMovement(false, StarSystem.MainMenuScreen); 
         Detail.text = "";
         Position.text = ""; 
     }
@@ -114,32 +119,32 @@ public class CursorController : MonoBehaviour {
     /// </summary>
     public void ToggleMovement()
     {
-        SetMovement(!MoveEnabled); 
+        SetMovement(!MoveEnabled, StarSystem.MainMenuScreen); 
     }
 
     /// <summary>
     /// Set whether this can move. 
     /// </summary>
-    public void SetMovement(bool setMove)
+    public void SetMovement(bool setMove, MenuController menu)
     {
         if (!setMove)
         {
-            StarSystem.MainMenuScreen.RemoveButton("cursorNE");
-            StarSystem.MainMenuScreen.RemoveButton("cursorE");
-            StarSystem.MainMenuScreen.RemoveButton("cursorSE");
-            StarSystem.MainMenuScreen.RemoveButton("cursorNW");
-            StarSystem.MainMenuScreen.RemoveButton("cursorW");
-            StarSystem.MainMenuScreen.RemoveButton("cursorSW");
+            menu.RemoveButton("cursorNE");
+            menu.RemoveButton("cursorE");
+            menu.RemoveButton("cursorSE");
+            menu.RemoveButton("cursorNW");
+            menu.RemoveButton("cursorW");
+            menu.RemoveButton("cursorSW");
             MoveEnabled = false; 
         }
         else
         {
-            StarSystem.MainMenuScreen.AddButton("cursorNE", "E - Move North East", MoveNE, KeyCode.E);
-            StarSystem.MainMenuScreen.AddButton("cursorE", "D - Move East", MoveE, KeyCode.D);
-            StarSystem.MainMenuScreen.AddButton("cursorSE", "X - Move South East", MoveSE, KeyCode.X);
-            StarSystem.MainMenuScreen.AddButton("cursorNW", "W - Move North West", MoveNW, KeyCode.W);
-            StarSystem.MainMenuScreen.AddButton("cursorW", "A - Move West", MoveW, KeyCode.A);
-            StarSystem.MainMenuScreen.AddButton("cursorSW", "Z - Move South West", MoveSW, KeyCode.Z);
+            menu.AddButton("cursorNE", "E - Move North East", MoveNE, KeyCode.E);
+            menu.AddButton("cursorE", "D - Move East", MoveE, KeyCode.D);
+            menu.AddButton("cursorSE", "X - Move South East", MoveSE, KeyCode.X);
+            menu.AddButton("cursorNW", "W - Move North West", MoveNW, KeyCode.W);
+            menu.AddButton("cursorW", "A - Move West", MoveW, KeyCode.A);
+            menu.AddButton("cursorSW", "Z - Move South West", MoveSW, KeyCode.Z);
             MoveEnabled = true;
         }
     }
@@ -181,7 +186,7 @@ public class CursorController : MonoBehaviour {
         SetCamPos(); 
     }
 
-    void SetCamPos()
+    public void SetCamPos()
     {
         Camera.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.transform.position.z); 
     }

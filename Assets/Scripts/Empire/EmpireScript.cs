@@ -47,7 +47,10 @@ public class EmpireScript : MonoBehaviour {
 
     int guardfleetno;
 
-    int raidingFleetsize; 
+    int raidingFleetsize;
+
+
+    public Color EmpireColor; 
 
 
     Coroutine Ai; 
