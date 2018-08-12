@@ -37,9 +37,9 @@ public class StarSystem : MonoBehaviour {
 
     public MenuManager MenuManager; 
 
-    public GameObject Cursor; 
+    public GameObject Cursor;
 
-
+    public LogScript Logger; 
     
 
 	// Use this for initialization
@@ -53,7 +53,9 @@ public class StarSystem : MonoBehaviour {
         EmpireManager = GetComponent<EmpireManager>();
         MenuManager = GetComponent<MenuManager>(); 
         Flag.EmptyPrefab = new GameObject();
- 
+
+
+
         MenuManager.LoadMainMenu(); 
 	}
 	
@@ -134,6 +136,9 @@ public class StarSystem : MonoBehaviour {
         TimeController.Paused = false; 
     }
 
+    /// <summary>
+    /// Creates the player empire. 
+    /// </summary>
     void StartPlayerEmpire()
     {
 
@@ -148,7 +153,16 @@ public class StarSystem : MonoBehaviour {
         curmov.StarSystem = this;
         curmov.Move(player.Colonies[0].Location);
         MenuManager.Cursor.Movement = curmov; 
-        MenuManager.Cursor.SetCamPos(); 
+        MenuManager.Cursor.SetCamPos();
+
+        player.OnBuildShip += (Vector3Int location, Attributes attributes) => 
+        {
+            Logger.Log($"New Ship of type {attributes.Type} built at {location.ToString()}", location);
+        };
+        player.OnColonize += (Vector3Int location, ColonyAttributes atr) =>
+        {
+            Logger.Log($"New Colony founded at {location.ToString()}", location); 
+        };
     }
 
    

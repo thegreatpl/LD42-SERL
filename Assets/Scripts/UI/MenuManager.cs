@@ -25,7 +25,9 @@ public class MenuManager: MonoBehaviour {
 
     public Canvas Canvas; 
 
-    public CursorController Cursor; 
+    public CursorController Cursor;
+
+    public LogScript Logger; 
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +41,7 @@ public class MenuManager: MonoBehaviour {
         PageMenuObj.GetComponentInChildren<MenuController>().TextObj = GetComponent<PrefabManager>().GetPrefab("Text");
 
         TimeController = GetComponent<TimeController>();
+        Logger = StarSystem.Logger; 
         //Cursor = StarSystem.Cursor.GetComponent<CursorController>(); 
 	}
 	
@@ -67,8 +70,9 @@ public class MenuManager: MonoBehaviour {
         MainMenuScreen.AddButton("select", "S - Select", LoadSelectObjectPageMenu, KeyCode.S);
         MainMenuScreen.AddButton("colonies", "H - Colonies", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Colonies.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.H);
         MainMenuScreen.AddButton("ships", "J - Ships", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Ships.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.J);
+        MainMenuScreen.AddButton("ping", "P - Goto Last Message", () => { Cursor.Movement.Move(Logger.PingLocation); }, KeyCode.P); 
 
-        MainMenuScreen.AddButton("flag", "P - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.P);
+        MainMenuScreen.AddButton("flag", "I - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.I);
         Cursor.SetMovement(true, MainMenuScreen); 
     }
 
@@ -209,7 +213,10 @@ public class MenuManager: MonoBehaviour {
                 if (colonyControl == null)
                 { CloseMenu("select"); return; }
                 if (colonyControl.building)
-                    return; 
+                {
+                    Logger.Log("Colony is building!", colonyControl.Location); 
+                    return;
+                }
 
                 LoadBuildMenu(colonyControl);      
             }, KeyCode.B); 
@@ -225,6 +232,7 @@ public class MenuManager: MonoBehaviour {
             menu.AddButton("moveentity", "M - MoveToCursor", () => {
                 if (brain == null)
                 {
+                    Logger.Log("Ship is Dead!", Cursor.Movement.Location); 
                     CloseMenu("select"); return;
                 }
                 brain.SetState(new MoveState(brain, Cursor.Movement.Location));
@@ -237,6 +245,7 @@ public class MenuManager: MonoBehaviour {
                 {
                     if (brain == null)
                     {
+                        Logger.Log("Ship is Dead!", Cursor.Movement.Location);
                         CloseMenu("select");
                         return;
                     }
@@ -246,6 +255,7 @@ public class MenuManager: MonoBehaviour {
                         CloseMenu("select");
                         return;
                     }
+                    Logger.Log("Not Valid for colonization", Cursor.Movement.Location);
                 }, KeyCode.O); 
 
 
@@ -283,8 +293,14 @@ public class MenuManager: MonoBehaviour {
                         {
                             colonyControl.BuildShip(design.Value);
                             CloseMenu("build");
+                            return; 
                         }
+                        Logger.Log("Not enough resources", colonyControl.Location);
+                        return;
                     }
+                    Logger.Log("Colony is building currently", colonyControl.Location);
+
+
                 }, text = $"{design.Key}: {design.Value.Type}{Environment.NewLine}"
                 + $"{design.Value.Cost} L:{weapons.Where(x => x.DamageType == DamageType.Energy).Sum(x => x.Amount)} M:{weapons.Where(x => x.DamageType == DamageType.Mass).Sum(x => x.Amount)} O:{weapons.Where(x => x.DamageType == DamageType.Mass).Sum(x => x.Amount)}", 
             });

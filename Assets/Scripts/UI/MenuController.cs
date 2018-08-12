@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,12 +53,19 @@ public class MenuController : MonoBehaviour {
     /// <param name="key"></param>
     public virtual void AddButton(string name,  string text, OnClick onClick, KeyCode? key)
     {
-        var button = Instantiate(ButtonObj, transform);
-        button.name = name; 
-        var control = button.GetComponent<ButtonControl>();
-        control.SetValues(text, onClick, key);
-        buttons.Add(name, button);
-        control.MenuController = this; 
+        try
+        {
+            var button = Instantiate(ButtonObj, transform);
+            button.name = name;
+            var control = button.GetComponent<ButtonControl>();
+            control.SetValues(text, onClick, key);
+            buttons.Add(name, button);
+            control.MenuController = this;
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"Error adding Button to menu:{e.Message}"); 
+        }
     }
 
     /// <summary>

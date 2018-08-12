@@ -5,6 +5,21 @@ using UnityEngine;
 using System.Linq;
 using Assets.Scripts.Entity.AI;
 
+/// <summary>
+/// When a colony is created, this gets called. 
+/// </summary>
+/// <param name="location"></param>
+/// <param name="colonyAttributes"></param>
+public delegate void OnColonize(Vector3Int location, ColonyAttributes colonyAttributes);
+
+/// <summary>
+/// When an entity is built, this gets called. 
+/// </summary>
+/// <param name="location"></param>
+/// <param name="attributes"></param>
+public delegate void OnBuildShip(Vector3Int location, Attributes attributes); 
+
+
 public class EmpireScript : MonoBehaviour {
 
     public static int IdCount = 0; 
@@ -36,9 +51,14 @@ public class EmpireScript : MonoBehaviour {
     /// </summary>
     public static GameObject Colony; 
 
-
+    /// <summary>
+    /// List of designs this empire has. 
+    /// </summary>
     public Dictionary<string, ShipDesign> Designs = new Dictionary<string, ShipDesign>();
 
+    /// <summary>
+    /// List of all ships owned by this empire. 
+    /// </summary>
     public List<EntityBrain> Ships = new List<EntityBrain>();
 
     /// <summary>
@@ -52,11 +72,23 @@ public class EmpireScript : MonoBehaviour {
 
     int raidingFleetsize;
 
-
+    /// <summary>
+    /// The color this empire will be displayed as. 
+    /// </summary>
     public Color EmpireColor; 
 
 
-    Coroutine Ai; 
+    Coroutine Ai;
+
+    /// <summary>
+    /// Delegates to be called when a colony is built. 
+    /// </summary>
+    public OnColonize OnColonize;
+
+    /// <summary>
+    /// Delegates to be called when a ship is built. 
+    /// </summary>
+    public OnBuildShip OnBuildShip; 
 
 	// Use this for initialization
 	void Start () {
@@ -260,6 +292,8 @@ public class EmpireScript : MonoBehaviour {
 
         atr.Initialize(design);
 
+        OnBuildShip?.Invoke(location, atr); 
+
     }
 
     public void CreateColony(Vector3Int location, GameObject source = null)
@@ -283,7 +317,8 @@ public class EmpireScript : MonoBehaviour {
         EntityManager.Entities.Add(atr);
         Colonies.Add(c);
 
-        obj.name = $"{Id}:ColonyPlanet:{atr.Id}"; 
+        obj.name = $"{Id}:ColonyPlanet:{atr.Id}";
+        OnColonize?.Invoke(location, atr); 
 
         if (source != null)
             Destroy(source); 
