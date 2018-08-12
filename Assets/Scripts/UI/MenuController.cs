@@ -89,12 +89,18 @@ public class MenuController : MonoBehaviour {
     /// </summary>
     /// <param name="name"></param>
     /// <param name="text"></param>
-    public virtual void AddText(string name, string text)
+    public virtual void AddText(string name, string text, GetText getText = null)
     {
         var tex = Instantiate(TextObj, transform);
         tex.name = name; 
         var texto = tex.GetComponent<Text>();
         texto.text = text; 
+
+        if (getText != null)
+        {
+            var update = tex.GetComponent<UpdateText>();
+            update.UpdateTextDelegate = getText; 
+        }
 
         buttons.Add(name, tex);
 

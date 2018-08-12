@@ -116,18 +116,18 @@ public class EmpireManager : MonoBehaviour {
                      Name = "Armor",
                      Types = new List<string>(){"armor"},
                      Weight = 10
-                 }, 
+                 },
                  new ShieldComponent()
                  {
-                     ShieldValue = 10, 
+                     ShieldValue = 10,
                      Cost = 15,
                      Name = "Shield",
                      Weight = 5,
-                     Types = new List<string>(){"shield"} 
-                 }, 
+                     Types = new List<string>(){"shield"}
+                 },
                  new WeaponComponent()
                  {
-                     Amount = 20, 
+                     Amount = 20,
                      CoolDownTime = 20,
                      Name = "Missile",
                      Cost = 20,

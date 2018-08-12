@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ColonyAction
+{
+    Mining, 
+    Building
+}
+
 public class ColonyControl : MonoBehaviour, ITickable {
 
     public EmpireScript Empire;
@@ -19,9 +25,8 @@ public class ColonyControl : MonoBehaviour, ITickable {
 
     public int coolDown;
 
-    public bool mining = false;
 
-    public bool building = false; 
+    public ColonyAction ColonyAction; 
 
     ShipDesign design;
     float buildLeft;
@@ -34,7 +39,7 @@ public class ColonyControl : MonoBehaviour, ITickable {
         StarSystem.TimeController.TimeObjects.Add(this);
         var sp = GetComponent<SpriteRenderer>();
         sp.sprite = StarSystem.Spritemanager.GetSprite("colony");
-        mining = true;
+        ColonyAction = ColonyAction.Mining; 
         init = true; 
 	}
 	
@@ -55,24 +60,25 @@ public class ColonyControl : MonoBehaviour, ITickable {
         if (!init)
             return;
 
-        if (mining)
-            Mine();
-
-        if (building)
-            Build(); 
+        switch(ColonyAction)
+        {
+            case ColonyAction.Mining:
+                Mine(); break;
+            case ColonyAction.Building:
+                Build(); break; 
+        }
         
     }
 
 
     public bool BuildShip(ShipDesign design)
     {
-        if (!building && Empire.Resouces > design.Cost)
+        if (ColonyAction != ColonyAction.Building && Empire.Resouces > design.Cost)
         {
-            mining = false;
+            ColonyAction = ColonyAction.Building; 
             this.design = design;
             buildLeft = (design.BaseComponents.Count * 10) + design.MaxHp;
             Empire.Resouces -= design.Cost; 
-            building = true;
             return true; 
         }
 
@@ -87,9 +93,8 @@ public class ColonyControl : MonoBehaviour, ITickable {
             if (buildLeft < 0)
             {
                 Empire.CreateEntity(Location, design);
-                design = null; 
-                building = false;
-                mining = true;
+                design = null;
+                ColonyAction = ColonyAction.Mining; 
             }
         }
     }

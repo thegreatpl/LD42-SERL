@@ -155,7 +155,7 @@ public class StarSystem : MonoBehaviour {
         curmov.Move(player.Colonies[0].Location);
         MenuManager.Cursor.Movement = curmov; 
         MenuManager.Cursor.SetCamPos();
-
+        Logger.PingLocation = player.Colonies[0].Location; 
         player.OnBuildShip += (Vector3Int location, Attributes attributes) => 
         {
             Logger.Log($"New Ship of type {attributes.Type} built at {location.ToString()}", location);

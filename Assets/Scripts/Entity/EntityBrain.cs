@@ -19,6 +19,18 @@ public class EntityBrain : MonoBehaviour {
     public string State { get { return CurrentState.Type; } }
 
     /// <summary>
+    /// human readble string of what the entity is currently up to. 
+    /// </summary>
+    public string Action {
+        get
+        {
+            if (Attributes.Battle != null)
+                return "In Combat";
+
+            return State; 
+        }
+    }
+    /// <summary>
     /// The type of ship this is. 
     /// </summary>
     public string Type { get { return Attributes.Type; } } 

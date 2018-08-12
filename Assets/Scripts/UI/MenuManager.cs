@@ -199,11 +199,24 @@ public class MenuManager: MonoBehaviour {
         var pageo = Instantiate(menuObj, Canvas.transform);
         var menu= pageo.GetComponentInChildren<MenuController>();
         menu.AddText("selectobj", attributes.name); 
+        var colony = attributes as ColonyAttributes;
+        var entity = attributes as Attributes;
+        if (colony != null)
+        {
+            var colonyControl = colony.GetComponent<ColonyControl>();
+            menu.AddText("status", "", () => { return colonyControl.ColonyAction.ToString(); }); 
+        }
+        else if (entity != null)
+        {
+            var brain = entity.GetComponent<EntityBrain>();
+            menu.AddText("status", "", () => { return brain.Action; }); 
+        }
+
+
 
         Cursor.SetMovement(true, menu);
         menu.AddButton("deselect", "Backspace - Back", () => { CloseMenu("select"); }, KeyCode.Backspace);
         menu.AddButton("goto", "G - Goto", () => { Cursor.SetPosition(attributes.Location); }, KeyCode.G); 
-        var colony = attributes as ColonyAttributes; 
         if (colony != null)
         {
             var colonyControl = colony.GetComponent<ColonyControl>();
@@ -212,7 +225,7 @@ public class MenuManager: MonoBehaviour {
             {
                 if (colonyControl == null)
                 { CloseMenu("select"); return; }
-                if (colonyControl.building)
+                if (colonyControl.ColonyAction == ColonyAction.Building)
                 {
                     Logger.Log("Colony is building!", colonyControl.Location); 
                     return;
@@ -225,7 +238,6 @@ public class MenuManager: MonoBehaviour {
             Menus.Add("select", menu); 
             return; 
         }
-        var entity = attributes as Attributes; 
         if (entity != null)
         {
             var brain = entity.GetComponent<EntityBrain>();
@@ -287,7 +299,7 @@ public class MenuManager: MonoBehaviour {
                 name = $"design{design.Key}",
                 OnClick = () =>
                 {
-                    if (colonyControl.building == false)
+                    if (colonyControl.ColonyAction != ColonyAction.Building )
                     {
                         if (colonyControl.Empire.Resouces > design.Value.Cost)
                         {

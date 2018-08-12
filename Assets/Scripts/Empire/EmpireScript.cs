@@ -149,7 +149,7 @@ public class EmpireScript : MonoBehaviour {
         {
             if (Resouces > design.Cost)
             {
-                var col = Colonies.Where(x => !x.building).OrderBy(x => x.Colony?.MineralValue).FirstOrDefault() ;
+                var col = Colonies.Where(x => x.ColonyAction != ColonyAction.Building).OrderBy(x => x.Colony?.MineralValue).FirstOrDefault() ;
 
                 if (col != null)
                 {
