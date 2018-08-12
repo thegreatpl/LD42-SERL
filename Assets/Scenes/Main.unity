@@ -787,7 +787,7 @@ MonoBehaviour:
   Tilemap: {fileID: 0}
   StarSystem: {fileID: 0}
   Spritemanager: {fileID: 0}
-  GalaxyRadius: 15
+  GalaxyRadius: 5
   StarSystemAttempts: 40
   MinPlanets: 4
   MaxPlanets: 12

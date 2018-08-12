@@ -16,7 +16,7 @@ public class GalaxyGenerator : MonoBehaviour {
     public Spritemanager Spritemanager;
 
 
-    public int GalaxyRadius = 100;
+    public int GalaxyRadius;
 
     public int StarSystemAttempts = 40;
 
@@ -65,7 +65,7 @@ public class GalaxyGenerator : MonoBehaviour {
         Tilemap.ClearAllTiles();
         LoadNames(); 
         LoadGraphics();
-        GenerateMap(100); 
+        GenerateMap(GalaxyRadius); 
     }
 
     /// <summary>

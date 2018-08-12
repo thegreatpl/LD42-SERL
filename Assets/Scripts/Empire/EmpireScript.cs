@@ -141,7 +141,7 @@ public class EmpireScript : MonoBehaviour {
 
         guardfleetno = Random.Range(1, 5);
         //first design is random. 
-        savingFor = Designs.Where(x => x.Value.Type == "Corvette" || x.Value.Type == "Colony").Random().Value;
+        savingFor = Designs.Where(x => x.Value.Type == "Corvette" || x.Value.Type == "ColonyShip").Random().Value;
         savingTarget = Colonies.Random();
 
 
@@ -226,21 +226,10 @@ public class EmpireScript : MonoBehaviour {
         };
 
         yield return true;
-
-        while (true)
+        bool run = true; 
+        while (run)
         {
             ShipBuilding(); 
-            //if (Resouces > design.Cost)
-            //{
-            //    var col = Colonies.Where(x => x.ColonyAction != ColonyAction.Building).OrderBy(x => x.Colony?.MineralValue).FirstOrDefault();
-
-            //    if (col != null)
-            //    {
-            //        col.BuildShip(design);
-            //        design = PickDesign();
-            //    }
-
-            //}
 
             yield return null;
 
@@ -284,7 +273,8 @@ public class EmpireScript : MonoBehaviour {
             var finishedRaid = fleets.Where(x => x.action == "raid" && EntityManager.GetEntitiesAt(x.Location).OfType<ColonyAttributes>().Count() == 0);
             foreach(var raid in finishedRaid)
             {
-                raid.SummonFleet(raid.HomeBase); 
+                raid.SummonFleet(raid.HomeBase);
+                raid.action = "dock"; 
             }
         
             yield return null; 
@@ -304,7 +294,22 @@ public class EmpireScript : MonoBehaviour {
                 }
             }
             yield return null;
+            var rad = fleets.Where(x => x.Tag == "raid" && x.Ships.Count < raidingFleetsize); 
+            if (rad.Count()<1)
+            {
+                fleets.Add(new Fleet()
+                {
+                    Location = Colonies.Random().Location,
+                    Tag = "raid",
+                    action = "dock"
+                });
+            }
 
+            yield return null;
+
+            //kill the AI. 
+            if (Colonies.Count == 0 && Ships.Count == 0)
+                run = false; 
         }
     }
 
@@ -328,6 +333,8 @@ public class EmpireScript : MonoBehaviour {
             if (Resouces > savingFor.Cost && savingTarget.ColonyAction != ColonyAction.Building)
             {
                 savingTarget.BuildShip(savingFor);
+                savingTarget = null;
+                savingFor = null; 
             }
             return;
         }
@@ -344,8 +351,12 @@ public class EmpireScript : MonoBehaviour {
             }
             if (percentage < 90)
             {
-                BuildColonies();
+                if (BuildColonies())
                 return;
+                if (BuildGuards())
+                    return;
+
+                BuildRaiders(); 
             }
             BuildRaiders();
         }
@@ -376,37 +387,45 @@ public class EmpireScript : MonoBehaviour {
             if (percentage < 50)
             {
 
-                BuildColonies();
-                return;
-
+                if (BuildColonies())
+                    return;
+                if (BuildGuards())
+                    return;
+                BuildRaiders(); 
             }
             if (percentage < 85)
             {
-                BuildGuards();
+               if( BuildGuards())
                 return;
+                if (BuildRaiders())
+                    return;
+                BuildColonies(); 
             }
             BuildRaiders();
         }
     }
 
-    void BuildGuards()
+    bool BuildGuards()
     {
         var guardFleets = fleets.Where(x => x.Tag == "guard" && x.Ships.Count < guardfleetno).OrderBy(x => x.Ships.Count);
         if (guardFleets.Count() > 0)
         {
             BuildFleets(guardFleets);
-            return;
+            return true ;
         }
+        return false; 
+
     }
 
-    void BuildRaiders()
+    bool BuildRaiders()
     {
         var guardFleets = fleets.Where(x => x.Tag == "raid").OrderBy(x => x.Ships.Count);
         if (guardFleets.Count() > 0)
         {
             BuildFleets(guardFleets);
-            return;
+            return true;
         }
+        return false; 
     }
 
     void BuildFleets(IEnumerable<Fleet> fleets)
@@ -432,7 +451,7 @@ public class EmpireScript : MonoBehaviour {
         public float distance; 
     }
 
-    void BuildColonies()
+    bool BuildColonies()
     {
         List<Distances> distanceMatrix = new List<Distances>();
         var buildable = Colonies.Where(x => x.ColonyAction != ColonyAction.Building);
@@ -450,7 +469,7 @@ public class EmpireScript : MonoBehaviour {
             }
         }
         if (distanceMatrix.Count < 1)
-            return;
+            return false;
         var ordered = distanceMatrix.OrderBy(x => x.distance);
         var design = Designs.Where(x => x.Value.Type == "ColonyShip").Random().Value; 
         foreach(var col in ordered)
@@ -459,10 +478,12 @@ public class EmpireScript : MonoBehaviour {
             {
                 savingFor = design;
                 savingTarget = col.colony;
-                return; 
+                return true; 
             }
             col.colony.BuildShip(design); 
         }
+
+        return true; 
     }
 
     /// <summary>
