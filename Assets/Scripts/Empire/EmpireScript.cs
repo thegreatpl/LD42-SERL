@@ -281,7 +281,6 @@ public class EmpireScript : MonoBehaviour {
         atr.Location = location; 
         var br = obj.GetComponent<EntityBrain>();
         br.StarSystem = StarSystem;
-        Ships.Add(br); 
         var ti = obj.GetComponent<TickControlScript>();
         ti.StarSystem = StarSystem;
         atr.TickControlScript = ti;

@@ -52,10 +52,9 @@ public class BattleScript : MonoBehaviour, ITickable {
         }
 
         if (!enemyFound)
-            Destroy(this); 
+            Destroy(transform.gameObject); 
 
     }
-
 
 
     // Use this for initialization

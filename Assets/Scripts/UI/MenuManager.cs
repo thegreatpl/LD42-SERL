@@ -91,8 +91,8 @@ public class MenuManager: MonoBehaviour {
     public void LoadMainMenu()
     {
         TimeController?.EndGame();
-        if (StarSystem.Cursor != null)
-            Destroy(StarSystem.Cursor);
+        if (Cursor != null)
+            Destroy(Cursor.gameObject);
         MainMenuScreen.ClearMenu();
         MainMenuScreen.AddButton("newgame", "n - Start New Game", StarSystem.StartNewGame, KeyCode.N);
     }
