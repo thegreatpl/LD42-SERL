@@ -22,6 +22,9 @@ public class BaseAttributes : MonoBehaviour
     /// </summary>
     public string Type; 
 
+    /// <summary>
+    /// The battle this entity or colony is in. 
+    /// </summary>
     public BattleScript Battle;
 
     /// <summary>

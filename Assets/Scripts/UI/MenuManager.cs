@@ -70,8 +70,17 @@ public class MenuManager: MonoBehaviour {
         MainMenuScreen.AddButton("select", "S - Select", LoadSelectObjectPageMenu, KeyCode.S);
         MainMenuScreen.AddButton("colonies", "H - Colonies", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Colonies.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.H);
         MainMenuScreen.AddButton("ships", "J - Ships", () => { LoadSelectObjectPageMenu(Cursor.PlayerEmpire.Ships.Select(x => x.GetComponent<BaseAttributes>())); }, KeyCode.J);
-        MainMenuScreen.AddButton("ping", "P - Goto Last Message", () => { Cursor.SetPosition(Logger.PingLocation); }, KeyCode.P); 
-
+        MainMenuScreen.AddButton("ping", "P - Goto Last Message", () => { Cursor.SetPosition(Logger.PingLocation); }, KeyCode.P);
+        MainMenuScreen.AddButton("look", "L - Look", () =>
+        {
+            var loc = Cursor.Movement.Location; 
+            if (StarSystem.EntityManager.Battles.ContainsKey(loc))
+            {
+                LoadBattleMenu(StarSystem.EntityManager.Battles[loc]);
+                return; 
+            }
+            LoadLookMenu(loc); 
+        }, KeyCode.L); 
         MainMenuScreen.AddButton("flag", "I - Toggle Flags", () => { Flag.EnableFlash = !Flag.EnableFlash; }, KeyCode.I);
         Cursor.SetMovement(true, MainMenuScreen); 
     }
@@ -94,7 +103,7 @@ public class MenuManager: MonoBehaviour {
     public void LoadGotoMenu()
     {
         MainMenuScreen.Active = false;
-        List<ButtonDef> buttonDefs = new List<ButtonDef>();  
+        List<PageObjectDef> buttonDefs = new List<PageObjectDef>();  
         var stars = StarSystem.GalaxyGenerator.Stars; 
         foreach(var star in stars)
         {
@@ -144,8 +153,8 @@ public class MenuManager: MonoBehaviour {
     }
 
     public void LoadSelectObjectPageMenu(IEnumerable<BaseAttributes> entities)
-    { 
-
+    {
+        CloseMenu("selectpage"); 
         if (entities.Count() == 0)
             return;
         if (entities.Count() == 1)
@@ -155,7 +164,7 @@ public class MenuManager: MonoBehaviour {
         }
 
         SetAllInactive();
-        List<ButtonDef> buttonDefs = new List<ButtonDef>();
+        List<PageObjectDef> buttonDefs = new List<PageObjectDef>();
         foreach(var ent in entities)
         {
             buttonDefs.Add(new ButtonDef()
@@ -196,6 +205,7 @@ public class MenuManager: MonoBehaviour {
     /// <param name="attributes"></param>
     public void LoadSelectedMenu(BaseAttributes attributes)
     {
+        CloseMenu("select"); 
         var pageo = Instantiate(menuObj, Canvas.transform);
         var menu= pageo.GetComponentInChildren<MenuController>();
         menu.AddText("selectobj", attributes.name); 
@@ -286,8 +296,9 @@ public class MenuManager: MonoBehaviour {
     /// <param name="colonyControl"></param>
     public void LoadBuildMenu(ColonyControl colonyControl)
     {
+        CloseMenu("build"); 
         SetAllInactive(); 
-        List<ButtonDef> buttonDefs = new List<ButtonDef>();
+        List<PageObjectDef> buttonDefs = new List<PageObjectDef>();
 
         var pageo = Instantiate(PageMenuObj, Canvas.transform);
         var page = pageo.GetComponentInChildren<PageMenu>();
@@ -325,6 +336,98 @@ public class MenuManager: MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Loads up a battle for the player to view. 
+    /// </summary>
+    /// <param name="battle"></param>
+    public void LoadBattleMenu(BattleScript battle)
+    {
+        CloseMenu("battle");
+        SetAllInactive(); 
+        var pageo = Instantiate(PageMenuObj, Canvas.transform);
+        var page = pageo.GetComponentInChildren<PageMenu>();
 
-   
+        var text = new List<PageObjectDef>();
+        text.Add(new PageObjectDef()
+        {
+            name = "battle",
+            text = $"Battle At {battle.Location}"
+        }); 
+        foreach(var entity in battle.Entities)
+        {
+            text.Add(new UpdateTextDef()
+            {
+                name = $"battle{entity.Id}",
+                text = "",
+                UpdateText = () =>
+                    {
+                        if (entity == null)
+                            return "Wreckage";
+                        if (entity.Battle != battle)
+                            return $"{entity.name}: Fled the field"; 
+
+                        return $"{entity.name} : {entity.Type} {Environment.NewLine}" +
+                        $"H:{entity.HP}/{entity.MaxHP} A:{entity.Armor}/{entity.MaxArmor} S:{entity.Shields}/{entity.MaxShields}{Environment.NewLine}"; 
+                    }
+            }); 
+        }
+        page.Close = () => { CloseMenu("battle"); }; 
+        page.Populate(text);
+        Menus.Add("battle", page);
+
+    }
+
+    public void LoadLookMenu(Vector3Int location)
+    {
+        var entities = StarSystem.EntityManager.GetEntitiesAt(location); 
+        if (entities.Count() < 1)
+        {
+
+            if (StarSystem.GalaxyGenerator.Stars.Contains(location))
+            {
+               var tile = StarSystem.GetSpaceTile(location);
+                Logger.Log($"The star {tile.Name}", location);
+                return; 
+            }
+            if (StarSystem.GalaxyGenerator.Planets.Contains(location))
+            {
+                var tile = StarSystem.GetSpaceTile(location);
+                Logger.Log($"The planet {tile.Name}. Resources of {tile.MineralValue}", location);
+                return;
+            }
+
+            Logger.Log("There is nothing here", location); 
+            return; 
+        }
+
+        CloseMenu("look");
+        SetAllInactive();
+        var pageo = Instantiate(PageMenuObj, Canvas.transform);
+        var page = pageo.GetComponentInChildren<PageMenu>();
+        List<PageObjectDef> pageObjectDefs = new List<PageObjectDef>(); 
+        foreach(var entity in entities)
+        {
+            pageObjectDefs.Add(new UpdateTextDef()
+            {
+                name = $"look{entity.name}", text = "", UpdateText = () =>
+                {
+                    if (entity == null)
+                        return "Wreckage";
+                    return $"{entity.name} : {entity.Type} {Environment.NewLine}" +
+                       $"H:{entity.HP}/{entity.MaxHP} A:{entity.Armor}/{entity.MaxArmor} S:{entity.Shields}/{entity.MaxShields}{Environment.NewLine}";
+
+                }
+            }); 
+        }
+
+        
+        page.Close = () => { CloseMenu("look"); };
+        page.Populate(pageObjectDefs); 
+        Menus.Add("look", page);
+
+
+    }
+
+
+
 }

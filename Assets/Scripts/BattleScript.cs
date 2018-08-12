@@ -12,7 +12,12 @@ public class BattleScript : MonoBehaviour, ITickable {
 
     public List<BaseAttributes> Entities = new List<BaseAttributes>();
 
-    public SpriteRenderer SpriteRenderer; 
+    public SpriteRenderer SpriteRenderer;
+
+    /// <summary>
+    /// The location of this battle. 
+    /// </summary>
+    public Vector3Int Location; 
 
 
     public void EndTick()
@@ -22,16 +27,21 @@ public class BattleScript : MonoBehaviour, ITickable {
 
     public void RunTick()
     {
+        bool enemyFound = false; 
         foreach(var entity in Entities.OfType<Attributes>())
         {
+            var targets = Entities.Where(x => entity.Empire.Hostile(x.Empire));
+            if (targets.Count() == 0)
+                continue;
+
+            enemyFound = true; 
+
             var weapons = entity.Weapons.Where(x => x.CoolDown == 0);
             if (weapons.Count() == 0)
                 continue; 
 
 
-            var targets = Entities.Where(x => entity.Empire.Hostile(x.Empire));
-            if (targets.Count() == 0)
-                continue;
+
             var target = targets.Random(); 
             foreach(var w in weapons)
             {
@@ -40,6 +50,9 @@ public class BattleScript : MonoBehaviour, ITickable {
             }
 
         }
+
+        if (!enemyFound)
+            Destroy(this); 
 
     }
 

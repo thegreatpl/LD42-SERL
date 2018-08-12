@@ -31,7 +31,9 @@ public class ColonyControl : MonoBehaviour, ITickable {
     ShipDesign design;
     float buildLeft;
 
-    bool init = false; 
+    bool init = false;
+
+    public ColonyAttributes Attributes; 
     // Use this for initialization
     void Start () {
 
@@ -39,7 +41,8 @@ public class ColonyControl : MonoBehaviour, ITickable {
         StarSystem.TimeController.TimeObjects.Add(this);
         var sp = GetComponent<SpriteRenderer>();
         sp.sprite = StarSystem.Spritemanager.GetSprite("colony");
-        ColonyAction = ColonyAction.Mining; 
+        ColonyAction = ColonyAction.Mining;
+        Attributes = GetComponent<ColonyAttributes>(); 
         init = true; 
 	}
 	
@@ -67,6 +70,10 @@ public class ColonyControl : MonoBehaviour, ITickable {
             case ColonyAction.Building:
                 Build(); break; 
         }
+
+        //Regenerate battle damage. 
+        if (Attributes.Battle == null && Attributes.HP < Attributes.MaxHP)
+            Attributes.HP++; 
         
     }
 

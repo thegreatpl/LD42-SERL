@@ -13,7 +13,7 @@ public class PageMenu : MenuController
 
     public int PerPage = 10; 
 
-    public Dictionary<int, List<ButtonDef>> Pages = new Dictionary<int, List<ButtonDef>>();
+    public Dictionary<int, List<PageObjectDef>> Pages = new Dictionary<int, List<PageObjectDef>>();
 
     public OnClick Close; 
 
@@ -21,16 +21,16 @@ public class PageMenu : MenuController
     /// Populates the page menu. 
     /// </summary>
     /// <param name="definitions"></param>
-    public void Populate(List<ButtonDef> definitions)
+    public void Populate(List<PageObjectDef> definitions)
     {
-        Pages = new Dictionary<int, List<ButtonDef>>(); 
-        List<ButtonDef> currentPage = new List<ButtonDef>();
+        Pages = new Dictionary<int, List<PageObjectDef>>(); 
+        List<PageObjectDef> currentPage = new List<PageObjectDef>();
         Pages.Add(Pages.Count, currentPage);
         foreach (var def in definitions)
         {
             if (currentPage.Count >= PerPage)
             {
-                currentPage = new List<ButtonDef>();
+                currentPage = new List<PageObjectDef>();
                 Pages.Add(Pages.Count, currentPage); 
             }
             currentPage.Add(def); 
@@ -46,11 +46,28 @@ public class PageMenu : MenuController
     public void PopulatePage(int id)
     {
         ClearMenu();
-        int idx = 0; 
+        int idx = -1; 
         foreach(var option in Pages[id])
         {
-            AddButton(option.name, $"{idx} - {option.text}", option.OnClick, (KeyCode)(48 + idx));
             idx++; 
+
+            var button = option as ButtonDef;
+            if (button != null)
+            {
+                AddButton(option.name, $"{idx} - {button.text}", button.OnClick, (KeyCode)(48 + idx));
+                continue; 
+            }
+
+            var text = option as UpdateTextDef; 
+            if (text != null)
+            {
+                AddText(text.name, text.text, text.UpdateText); 
+                continue; 
+            }
+
+            AddText(option.name, option.text); 
+                   
+
         }
 
 

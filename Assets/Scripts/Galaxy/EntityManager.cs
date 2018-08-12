@@ -13,7 +13,7 @@ public class EntityManager : MonoBehaviour {
 
     public List<BaseAttributes> Entities = new List<BaseAttributes>();
 
-    Dictionary<Vector3Int, BattleScript> Battles = new Dictionary<Vector3Int, BattleScript>(); 
+    public Dictionary<Vector3Int, BattleScript> Battles = new Dictionary<Vector3Int, BattleScript>(); 
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +47,8 @@ public class EntityManager : MonoBehaviour {
                 else
                 {
                    var bat = Instantiate(BattlePrefab, StarSystem.TileToWorld(ent.Location), BattlePrefab.transform.rotation).GetComponent<BattleScript>();
-                    bat.StarSystem = StarSystem; 
+                    bat.StarSystem = StarSystem;
+                    bat.Location = ent.Location; 
                     Battles.Add(ent.Location, bat);
                     bat.Entities.Add(ent);
                     ent.Battle = bat; 
@@ -55,6 +56,8 @@ public class EntityManager : MonoBehaviour {
                 }
             }
         }
+
+
     }
 
     /// <summary>
@@ -74,4 +77,6 @@ public class EntityManager : MonoBehaviour {
     {
         return Entities.Where(x => x.Location == loc); 
     }
+
+  
 }
