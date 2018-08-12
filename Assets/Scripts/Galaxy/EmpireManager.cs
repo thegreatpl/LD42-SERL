@@ -85,6 +85,7 @@ public class EmpireManager : MonoBehaviour {
                  DamageType = DamageType.Mass,
                  Name = "Cannon",
                  Weight = 0.5f,
+                 Cost = 5,
                  Types = new List<string>(){"weapon", "mass"}
                 },
                 new EngineComponent()
@@ -98,6 +99,42 @@ public class EmpireManager : MonoBehaviour {
                    Cost = 100,
                    Weight = 50
                },
+                 new WeaponComponent()
+                 {
+                     Amount = 1,
+                     CoolDownTime = 3,
+                     DamageType = DamageType.Energy,
+                     Name = "Laser",
+                     Weight = 0.5f,
+                     Cost = 5,
+                     Types = new List<string>(){"weapon", "laser"}
+                 },
+                 new ArmorComponent()
+                 {
+                     ArmorValue = 10,
+                     Cost = 15,
+                     Name = "Armor",
+                     Types = new List<string>(){"armor"},
+                     Weight = 10
+                 }, 
+                 new ShieldComponent()
+                 {
+                     ShieldValue = 10, 
+                     Cost = 15,
+                     Name = "Shield",
+                     Weight = 5,
+                     Types = new List<string>(){"shield"} 
+                 }, 
+                 new WeaponComponent()
+                 {
+                     Amount = 20, 
+                     CoolDownTime = 20,
+                     Name = "Missile",
+                     Cost = 20,
+                     DamageType = DamageType.None,
+                     Weight = 1,
+                     Types = new List<string>(){"weapon", "missle"}
+                 }
         };
 
     }
