@@ -26,8 +26,8 @@ public class EntityManager : MonoBehaviour {
 	void Update () {
         Entities.RemoveAll(x => x == null); 
         var dead = Battles.Where(x => x.Value == null);
-        foreach (var d in dead)
-            Battles.Remove(d.Key); 
+        for (int idx = 0; idx < dead.Count(); idx++)
+            Battles.Remove(dead.ElementAt(idx).Key); 
 	}
 
     public void EndTick()

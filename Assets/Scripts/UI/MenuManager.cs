@@ -91,6 +91,7 @@ public class MenuManager: MonoBehaviour {
     public void LoadMainMenu()
     {
         TimeController?.EndGame();
+        StarSystem?.EmpireManager?.EndGame(); 
         if (Cursor != null)
             Destroy(Cursor.gameObject);
         MainMenuScreen.ClearMenu();
@@ -148,7 +149,7 @@ public class MenuManager: MonoBehaviour {
     {
         var location = Cursor.Movement.Location;
 
-        var entities = StarSystem.EntityManager.GetEntitiesAt(location);
+        var entities = StarSystem.EntityManager.GetEntitiesAt(location).Where(x => x.Empire == Cursor.PlayerEmpire);
         LoadSelectObjectPageMenu(entities); 
     }
 

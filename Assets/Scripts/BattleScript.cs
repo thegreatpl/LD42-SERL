@@ -17,7 +17,10 @@ public class BattleScript : MonoBehaviour, ITickable {
     /// <summary>
     /// The location of this battle. 
     /// </summary>
-    public Vector3Int Location; 
+    public Vector3Int Location;
+
+
+    bool End = false; 
 
 
     public void EndTick()
@@ -30,7 +33,9 @@ public class BattleScript : MonoBehaviour, ITickable {
         bool enemyFound = false; 
         foreach(var entity in Entities.OfType<Attributes>())
         {
-            var targets = Entities.Where(x => entity.Empire.Hostile(x.Empire));
+            if (entity == null)
+                continue; 
+            var targets = Entities.Where(x => entity != null && entity.Empire.Hostile(x.Empire));
             if (targets.Count() == 0)
                 continue;
 
@@ -52,7 +57,7 @@ public class BattleScript : MonoBehaviour, ITickable {
         }
 
         if (!enemyFound)
-            Destroy(transform.gameObject); 
+            End = true; 
 
     }
 
@@ -67,6 +72,8 @@ public class BattleScript : MonoBehaviour, ITickable {
 	
 	// Update is called once per frame
 	void Update () {
-        Entities.RemoveAll(x => x == null); 
+        Entities.RemoveAll(x => x == null);
+        if (End)
+            Destroy(gameObject); 
 	}
 }

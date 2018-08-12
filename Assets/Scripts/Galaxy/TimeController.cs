@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; 
+using System.Linq;
+using System;
 
 public class TimeController : MonoBehaviour {
 
@@ -49,25 +50,43 @@ public class TimeController : MonoBehaviour {
     {
         while (true)
         {
+
             while (Paused)
                 yield return null;
 
             var thisTick = TimeObjects.Where(x => x != null && x.CoolDown <= 0);
-            int updated = 0; 
+            int updated = 0;
 
-            foreach(var entity in thisTick)
+            foreach (var entity in thisTick)
             {
-                entity.RunTick(); 
+                try
+                {
+                    if (entity == null)
+                        continue;
+
+                    entity?.RunTick();
+                }
+                //stop errors from destroying the game entire. 
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error: Exception caught by time controller:{e.Message}");
+                }
                 if (updated > MaxUpdate)
                 {
                     updated = 0;
-                    yield return null; 
+                    yield return null;
                 }
             }
 
             TimeObjects.ForEach(x => x.EndTick());
-            EntityManager.EndTick(); 
-            yield return new WaitForSeconds(0.5f); 
+            try
+            {
+                EntityManager.EndTick();
+            }
+            catch (Exception e)
+            { Debug.LogError($"Error: Entity Manager threw exception during end tick:{e.Message}"); }
+            yield return new WaitForSeconds(0.5f);
+
         }
     }
 }

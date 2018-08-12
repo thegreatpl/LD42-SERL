@@ -30,6 +30,9 @@ public class Movement : MonoBehaviour {
     /// <param name="newLoc"></param>
     public virtual bool Move(Vector3Int newLoc)
     {
+        if (gameObject == null)
+            return false; 
+
         if (!StarSystem.IsPassable(newLoc))
             return false; 
 

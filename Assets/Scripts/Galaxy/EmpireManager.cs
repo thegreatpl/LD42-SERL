@@ -62,7 +62,7 @@ public class EmpireManager : MonoBehaviour {
 
         script.CreateColony(uncolonized.Random());
 
-        script.EmpireColor = Spritemanager.Colors["RED"]; 
+        script.EmpireColor = Spritemanager.Colors["LRED"]; 
         //script.StartAi(); 
 
         return script; 
@@ -107,7 +107,7 @@ public class EmpireManager : MonoBehaviour {
                      Name = "Laser",
                      Weight = 0.5f,
                      Cost = 5,
-                     Types = new List<string>(){"weapon", "laser"}
+                     Types = new List<string>(){"weapon", "energy"}
                  },
                  new ArmorComponent()
                  {
@@ -133,7 +133,7 @@ public class EmpireManager : MonoBehaviour {
                      Cost = 20,
                      DamageType = DamageType.None,
                      Weight = 1,
-                     Types = new List<string>(){"weapon", "missle"}
+                     Types = new List<string>(){"weapon", "missile"}
                  }
         };
 
@@ -145,7 +145,7 @@ public class EmpireManager : MonoBehaviour {
         var corvette = new ShipDesign()
         {
             Name = "Corvette",
-            Type = "Warship",
+            Type = "Corvette",
             Sprite = Spritemanager.GetSprite("corvette"),
             MaxHp = 10,
             BaseComponents = new List<BaseComponent>()
@@ -168,6 +168,74 @@ public class EmpireManager : MonoBehaviour {
         };
         colony.Cost = colony.BaseComponents.Sum(x => x.Cost); 
         BasicDesigns.Add(colony.Name, colony);
+        var frigate = new ShipDesign()
+        {
+            Name = "Frigate",
+            Type = "Frigate",
+            Sprite = Spritemanager.GetSprite("frigate"),
+            MaxHp = 10,
+            BaseComponents = new List<BaseComponent>()
+            {
+                GetComponentType("engine"),
+                GetComponentType("engine"),
+                GetComponentType("engine"),
+                GetComponentType("mass"),
+                GetComponentType("armor"),
+                GetComponentType("armor"),
+                GetComponentType("mass"),
+
+
+            }
+        };
+        frigate.Cost = frigate.BaseComponents.Sum(x => x.Cost);
+        BasicDesigns.Add(frigate.Name, frigate);
+        var destroyer = new ShipDesign()
+        {
+            Name = "Destroyer",
+            Type = "Destroyer",
+            Sprite = Spritemanager.GetSprite("destroyer"),
+            MaxHp = 10,
+            BaseComponents = new List<BaseComponent>()
+            {
+                GetComponentType("engine"),
+                GetComponentType("engine"),
+                GetComponentType("engine"),
+                GetComponentType("mass"),
+                GetComponentType("armor"),
+                GetComponentType("armor"),
+                GetComponentType("mass"), 
+                GetComponentType("shield"), 
+                GetComponentType("energy")
+            }
+        };
+        destroyer.Cost = destroyer.BaseComponents.Sum(x => x.Cost);
+        BasicDesigns.Add(destroyer.Name, destroyer);
+        var battleship = new ShipDesign()
+        {
+            Name = "Battleship",
+            Type = "Battleship",
+            Sprite = Spritemanager.GetSprite("battleship"),
+            MaxHp = 10,
+            BaseComponents = new List<BaseComponent>()
+            {
+                GetComponentType("engine"),
+                GetComponentType("engine"),
+                GetComponentType("engine"),
+                GetComponentType("mass"),
+                GetComponentType("armor"),
+                GetComponentType("armor"),
+                GetComponentType("mass"),
+                GetComponentType("shield"),
+                GetComponentType("energy"),
+                GetComponentType("engine"),
+                GetComponentType("missile"),
+                GetComponentType("armor"),
+                GetComponentType("armor"),
+
+            }
+        };
+        battleship.Cost = battleship.BaseComponents.Sum(x => x.Cost);
+        BasicDesigns.Add(battleship.Name, battleship);
     }
 
     public void LoadEmpireBanners()
@@ -183,15 +251,21 @@ public class EmpireManager : MonoBehaviour {
         }
     }
 
-    public void NewGame()
+    public void EndGame()
     {
         foreach (var empire in Empires)
         {
-            empire.Ships.ForEach(x => Destroy(x));
-            empire.Colonies.ForEach(x => Destroy(x)); 
+            empire.Ships.ForEach(x => Destroy(x.gameObject));
+            empire.Colonies.ForEach(x => Destroy(x.gameObject)); 
             Destroy(empire); 
         }
         Empires.Clear();
+
+    }
+
+    public void NewGame()
+    {
+        EndGame(); 
         LoadEmpireBanners(); 
         LoadComponents();
         LoadBasicDesigns();
