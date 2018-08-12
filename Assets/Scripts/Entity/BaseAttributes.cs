@@ -8,6 +8,11 @@ using UnityEngine;
 
 public class BaseAttributes : MonoBehaviour
 {
+    /// <summary>
+    /// The type of this entity. 
+    /// </summary>
+    public string Type; 
+
     public BattleScript Battle;
 
     /// <summary>

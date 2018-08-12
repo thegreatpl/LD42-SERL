@@ -11,6 +11,9 @@ public class EmpireScript : MonoBehaviour {
 
     public int Id;
 
+
+    public string Name => $"Empire {Id}"; 
+
     public Sprite EmpireBanner; 
 
     public int Resouces = 0;
@@ -223,12 +226,12 @@ public class EmpireScript : MonoBehaviour {
         if (Colonies.Count < 3)
         {
             if (percentage < 0.75f)
-                return Designs.Where(x => x.Value.Type == "Colony").Random().Value;
+                return Designs.Where(x => x.Value.Type == "ColonyShip").Random().Value;
             else
                 return Designs.Random().Value; 
         }
         if (percentage < 0.10f)
-            return Designs.Where(x => x.Value.Type == "Colony").Random().Value;
+            return Designs.Where(x => x.Value.Type == "ColonyShip").Random().Value;
         if (percentage < 0.80f)
             return Designs.Where(x => x.Value.Type == "Warship").Random().Value;
         return Designs.Random().Value;

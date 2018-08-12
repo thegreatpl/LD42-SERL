@@ -14,7 +14,7 @@ public enum DamageType
 
 public class Attributes : BaseAttributes {
 
-    public string Type; 
+    //public string Type; 
 
     /// <summary>
     /// How heavy this is. 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -109,7 +110,14 @@ public class CursorController : MonoBehaviour {
         if (!string.IsNullOrWhiteSpace(location.Region))
             detail += $"Region: {location.Region}{Environment.NewLine}";
         if (location.MineralValue != 0)
-            detail += $"Minerals: {location.MineralValue}{Environment.NewLine}"; 
+            detail += $"Minerals: {location.MineralValue}{Environment.NewLine}";
+
+
+        var ent = StarSystem.EntityManager.Entities.Where(x => x.Location == Movement.Location); 
+        foreach(var e in ent)
+        {
+            detail += $"{e.Empire.Name}:{e.Type}{Environment.NewLine}"; 
+        }
 
         Detail.text = detail; 
     }

@@ -121,7 +121,7 @@ public class EmpireManager : MonoBehaviour {
         var colony = new ShipDesign()
         {
             Name = "Colony",
-            Type = "Colony",
+            Type = "ColonyShip",
             Sprite = Spritemanager.GetSprite("colonyship"),
             MaxHp = 10,
             BaseComponents = new List<BaseComponent>()
