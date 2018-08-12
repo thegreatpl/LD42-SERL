@@ -24,10 +24,10 @@ public class GalaxyGenerator : MonoBehaviour {
 
     public int MaxPlanets = 12;
 
-    public List<Vector3Int> Planets;
+    public List<Vector3Int> Planets { get; protected set; }
 
 
-    public List<Vector3Int> Stars; 
+    public List<Vector3Int> Stars { get; protected set; } 
 
 
     public List<string> NameOptions = new List<string>(); 

@@ -24,6 +24,7 @@ public class EntityManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Entities.RemoveAll(x => x == null); 
         var dead = Battles.Where(x => x.Value == null);
         foreach (var d in dead)
             Battles.Remove(d.Key); 

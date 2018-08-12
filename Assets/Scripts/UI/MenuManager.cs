@@ -49,7 +49,7 @@ public class MenuManager: MonoBehaviour {
             MainMenuScreen.Active = true;
             for (int idx = 0; Menus.Count > idx; )
             {
-               CloseMenu(Menus.ElementAt(1).Key);
+               CloseMenu(Menus.ElementAt(0).Key);
             }
         }
         
@@ -177,13 +177,17 @@ public class MenuManager: MonoBehaviour {
             MainMenuScreen.Active = true; 
     }
 
+    /// <summary>
+    /// Loads the selected menu. 
+    /// </summary>
+    /// <param name="attributes"></param>
     public void LoadSelectedMenu(BaseAttributes attributes)
     {
         var pageo = Instantiate(menuObj, Canvas.transform);
         var menu= pageo.GetComponentInChildren<MenuController>();
         Cursor.SetMovement(true, menu);
-        menu.AddButton("deselect", "Backspace - Back", () => { CloseMenu("select"); }, KeyCode.Backspace); 
-
+        menu.AddButton("deselect", "Backspace - Back", () => { CloseMenu("select"); }, KeyCode.Backspace);
+        menu.AddButton("goto", "G - Goto", () => { Cursor.SetPosition(attributes.Location); }, KeyCode.G); 
         var colony = attributes as ColonyAttributes; 
         if (colony != null)
         {
@@ -213,6 +217,8 @@ public class MenuManager: MonoBehaviour {
                     CloseMenu("select"); return;
                 }
                 brain.SetState(new MoveState(brain, Cursor.Movement.Location));
+                CloseMenu("select");
+                return;
             }, KeyCode.M);
 
             if (entity.CanColonize)
@@ -225,7 +231,9 @@ public class MenuManager: MonoBehaviour {
                     }
                     if (StarSystem.EntityManager.GetAllUncolonized().Contains(Cursor.Movement.Location))
                     {
-                        brain.SetState(new ColonizeState(brain, Cursor.Movement.Location)); 
+                        brain.SetState(new ColonizeState(brain, Cursor.Movement.Location));
+                        CloseMenu("select");
+                        return;
                     }
                 }, KeyCode.O); 
 
@@ -268,8 +276,10 @@ public class MenuManager: MonoBehaviour {
                 + $"{design.Value.Cost} L:{weapons.Where(x => x.DamageType == DamageType.Energy).Sum(x => x.Amount)} M:{weapons.Where(x => x.DamageType == DamageType.Mass).Sum(x => x.Amount)} O:{weapons.Where(x => x.DamageType == DamageType.Mass).Sum(x => x.Amount)}", 
             });
         }
-        page.Populate(buttonDefs);
+
         page.Close = () => { CloseMenu("build"); };
+
+        page.Populate(buttonDefs);
         Menus.Add("build", page); 
 
     }
