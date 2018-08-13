@@ -17,6 +17,8 @@ public static class Extensions
     /// <returns></returns>
     public static T Random<T>(this IEnumerable<T> list)
     {
+        if (list.Count() == 0)
+            return default(T); 
         return list.ElementAt(UnityEngine.Random.Range(0, list.Count())); 
     }
 }

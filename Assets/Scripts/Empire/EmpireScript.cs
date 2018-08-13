@@ -353,10 +353,10 @@ public class EmpireScript : MonoBehaviour {
             {
                 if (BuildColonies())
                 return;
-                if (BuildGuards())
-                    return;
+                //if (BuildGuards())
+                //    return;
 
-                BuildRaiders(); 
+                //BuildRaiders(); 
             }
             BuildRaiders();
         }
@@ -389,17 +389,17 @@ public class EmpireScript : MonoBehaviour {
 
                 if (BuildColonies())
                     return;
-                if (BuildGuards())
-                    return;
-                BuildRaiders(); 
+                //if (BuildGuards())
+                //    return;
+                //BuildRaiders(); 
             }
             if (percentage < 85)
             {
                if( BuildGuards())
                 return;
-                if (BuildRaiders())
-                    return;
-                BuildColonies(); 
+                //if (BuildRaiders())
+                //    return;
+                //BuildColonies(); 
             }
             BuildRaiders();
         }
@@ -433,7 +433,7 @@ public class EmpireScript : MonoBehaviour {
         foreach (var guard in fleets)
         {
             var colony = Colonies.FirstOrDefault(x => x.Location == guard.HomeBase);
-            var design = PickDesign();
+            var design = PickWarshipDesign();
             if (Resouces < design.Cost)
             {
                 savingFor = design;
@@ -455,7 +455,9 @@ public class EmpireScript : MonoBehaviour {
     {
         List<Distances> distanceMatrix = new List<Distances>();
         var buildable = Colonies.Where(x => x.ColonyAction != ColonyAction.Building);
-        var empty = EntityManager.GetAllUncolonized(); 
+        var empty = EntityManager.GetAllUncolonized();
+        if (empty.Count == 0)
+            return false; 
         foreach(var col in buildable)
         {
             foreach(var uncol in empty)

@@ -24,7 +24,12 @@ public class GalaxyGenerator : MonoBehaviour {
 
     public int MaxPlanets = 12;
 
-    public List<Vector3Int> Planets { get; protected set; }
+    protected List<Vector3Int> planets; 
+
+    public List<Vector3Int> Planets { get
+        {
+            return planets.Select(x => x).ToList(); 
+        } }
 
 
     public List<Vector3Int> Stars { get; protected set; } 
@@ -60,7 +65,8 @@ public class GalaxyGenerator : MonoBehaviour {
     /// </summary>
     public void GenerateGalaxy()
     {
-        Planets = new List<Vector3Int>();
+        StarSystem.Logger.Log("New Galaxy being Generated", Vector3Int.zero); 
+        planets = new List<Vector3Int>();
         Stars = new List<Vector3Int>(); 
         Tilemap.ClearAllTiles();
         LoadNames(); 
@@ -166,7 +172,7 @@ public class GalaxyGenerator : MonoBehaviour {
                 t.color = Planet.color; 
 
                 Tilemap.SetTile(p, t);
-                Planets.Add(p); 
+                planets.Add(p); 
 
                 foreach(var r in ringAct)
                 {

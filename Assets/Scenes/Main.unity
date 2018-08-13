@@ -265,7 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   ButtonObj: {fileID: 1192052881697734, guid: 42b44a4661af50b4bbf5206dd9d62994, type: 2}
-  TextObj: {fileID: 0}
+  TextObj: {fileID: 1258700610135432, guid: bf6bfd8958aca634bb19f48036700267, type: 2}
 --- !u!114 &120043147
 MonoBehaviour:
   m_ObjectHideFlags: 0

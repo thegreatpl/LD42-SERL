@@ -91,11 +91,38 @@ public class MenuManager: MonoBehaviour {
     public void LoadMainMenu()
     {
         TimeController?.EndGame();
-        StarSystem?.EmpireManager?.EndGame(); 
+        StarSystem?.EmpireManager?.EndGame();
         if (Cursor != null)
             Destroy(Cursor.gameObject);
         MainMenuScreen.ClearMenu();
-        MainMenuScreen.AddButton("newgame", "n - Start New Game", StarSystem.StartNewGame, KeyCode.N);
+        MainMenuScreen.AddButton("newgame", "N - Start New Game", StarSystem.StartNewGame, KeyCode.N);
+        #if !UNITY_WEBGL
+        MainMenuScreen.AddButton("exit", "ESC - Exit", Application.Quit, KeyCode.Escape);
+#endif
+
+        MainMenuScreen.AddButton("reduceempires", "W - Decrease Empires", () =>
+        {
+            if (StarSystem.EmpireNo > 0)
+                StarSystem.EmpireNo--;
+        }, KeyCode.W);
+        MainMenuScreen.AddText("empireNo", "", () => { return $"Empires:{StarSystem.EmpireNo}"; });
+        MainMenuScreen.AddButton("increasemepires", "E - Increase Empires", () =>
+        {
+            if (StarSystem.EmpireNo < 31)
+                StarSystem.EmpireNo++;
+        }, KeyCode.E);
+
+        MainMenuScreen.AddButton("reducegalaxy", "A - Decrease Galaxy Size", () =>
+        {
+            if (StarSystem.GalaxyGenerator.GalaxyRadius > 5)
+                StarSystem.GalaxyGenerator.GalaxyRadius--;
+        }, KeyCode.A);
+        MainMenuScreen.AddText("galaxysize", "", () => { return $"Galaxy Redius:{StarSystem.GalaxyGenerator.GalaxyRadius}"; });
+        MainMenuScreen.AddButton("expandgalaxy", "D - Increase Galaxy Raduis", () =>
+        {
+            StarSystem.GalaxyGenerator.GalaxyRadius++;
+        }, KeyCode.D);
+
     }
 
     /// <summary>
