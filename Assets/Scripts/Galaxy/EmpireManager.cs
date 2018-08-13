@@ -257,7 +257,7 @@ public class EmpireManager : MonoBehaviour {
         {
             empire.Ships.ForEach(x => Destroy(x.gameObject));
             empire.Colonies.ForEach(x => Destroy(x.gameObject)); 
-            Destroy(empire); 
+            Destroy(empire.gameObject); 
         }
         Empires.Clear();
 

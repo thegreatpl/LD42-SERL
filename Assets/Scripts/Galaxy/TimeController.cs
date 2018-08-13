@@ -71,6 +71,7 @@ public class TimeController : MonoBehaviour {
                 {
                     Debug.LogError($"Error: Exception caught by time controller:{e.Message}");
                 }
+                updated++; 
                 if (updated > MaxUpdate)
                 {
                     updated = 0;
@@ -85,7 +86,7 @@ public class TimeController : MonoBehaviour {
             }
             catch (Exception e)
             { Debug.LogError($"Error: Entity Manager threw exception during end tick:{e.Message}"); }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
 
         }
     }

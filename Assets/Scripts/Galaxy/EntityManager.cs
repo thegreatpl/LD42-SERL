@@ -67,7 +67,7 @@ public class EntityManager : MonoBehaviour {
     public List<Vector3Int> GetAllUncolonized()
     {
         var planets = StarSystem.GalaxyGenerator.Planets;
-        var colonies = Entities.OfType<ColonyAttributes>().Select(x => x.Location);
+        var colonies = Entities.OfType<ColonyAttributes>().Select(x => x?.Location);
 
         planets.RemoveAll(x => colonies.Contains(x));
         return planets; 
@@ -75,7 +75,7 @@ public class EntityManager : MonoBehaviour {
 
     public IEnumerable<BaseAttributes> GetEntitiesAt(Vector3Int loc)
     {
-        return Entities.Where(x => x.Location == loc); 
+        return Entities.Where(x => x?.Location == loc); 
     }
 
   

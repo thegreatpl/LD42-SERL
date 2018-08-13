@@ -54,7 +54,8 @@ public class EntityBrain : MonoBehaviour {
 
     public void RunTick()
     {
-        CurrentState.Run(); 
+        if (gameObject != null)
+            CurrentState.Run(); 
     }
 
     public void SetState(BaseState newState)

@@ -29,12 +29,12 @@ namespace Assets.Scripts.Entity.AI
 
         public override void Run()
         {
-            if (Brain.Attributes.Battle != null)
+            if (Brain?.Attributes?.Battle != null)
                 return; 
 
-            if (Brain.Movement.Location == Target)
+            if (Brain?.Movement?.Location == Target)
             {
-                Brain.SetState(new GuardState(Brain));
+                Brain?.SetState(new GuardState(Brain));
                 return; 
             }
 
@@ -48,7 +48,7 @@ namespace Assets.Scripts.Entity.AI
                 GetPath(); 
             }
             //may cause problems. 
-            Brain.Movement.Move(MovementQueue.Dequeue()); 
+            Brain?.Movement?.Move(MovementQueue.Dequeue()); 
         }
 
         public virtual void GetPath()

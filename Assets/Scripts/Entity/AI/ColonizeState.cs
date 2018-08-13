@@ -17,10 +17,10 @@ namespace Assets.Scripts.Entity.AI
 
         public override void Run()
         {
-            if (Brain.Attributes.Battle != null)
+            if (Brain?.Attributes?.Battle != null)
                 return;
 
-            if (Target == Brain.Movement.Location)
+            if (Target == Brain?.Movement?.Location)
                 Colonize(); 
 
             Move(); 
@@ -30,9 +30,9 @@ namespace Assets.Scripts.Entity.AI
         void Colonize()
         {
 
-            Brain.Attributes.Empire.CreateColony(Target, Brain.gameObject);
+            Brain?.Attributes?.Empire?.CreateColony(Target, Brain.gameObject);
 
-            Brain.SetState(new GuardState(Brain));
+            Brain?.SetState(new GuardState(Brain));
 
         }
     }
