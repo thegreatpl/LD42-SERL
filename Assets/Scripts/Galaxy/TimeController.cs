@@ -63,6 +63,10 @@ public class TimeController : MonoBehaviour {
                 {
                     if (entity == null)
                         continue;
+                    if ((entity is UnityEngine.Object) && (entity.Equals(null)))
+                        continue;
+
+
 
                     entity?.RunTick();
                 }
