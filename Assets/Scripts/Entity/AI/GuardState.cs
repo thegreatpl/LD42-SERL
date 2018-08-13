@@ -22,7 +22,7 @@ namespace Assets.Scripts.Entity.AI
 
         public override void Run()
         {
-            if (Brain.Attributes.Battle != null)
+            if (Brain?.Attributes?.Battle != null)
                 return; 
 
 

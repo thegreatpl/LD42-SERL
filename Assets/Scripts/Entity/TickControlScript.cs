@@ -37,7 +37,7 @@ public class TickControlScript : MonoBehaviour, ITickable {
     /// </summary>
     public void RunTick()
     {
-        EntityBrain.RunTick(); 
+        EntityBrain?.RunTick(); 
     }
 
     /// <summary>

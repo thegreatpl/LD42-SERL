@@ -54,7 +54,7 @@ public class TimeController : MonoBehaviour {
             while (Paused)
                 yield return null;
 
-            var thisTick = TimeObjects.Where(x => x != null && x.CoolDown <= 0);
+            var thisTick = TimeObjects.Where(x => x != null && x.CoolDown <= 0).ToList();
             int updated = 0;
 
             foreach (var entity in thisTick)

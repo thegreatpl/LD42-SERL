@@ -53,6 +53,8 @@ namespace Assets.Scripts.Entity.AI
 
         public virtual void GetPath()
         {
+            if (Brain == null)
+                return; 
             var current = Brain.Movement.Location;
             var curHex = OffsetCoord.RFromUnity(current);
             var tarhex = OffsetCoord.RFromUnity(Target);
